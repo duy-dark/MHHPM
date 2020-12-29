@@ -1,0 +1,111 @@
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.login {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/bg-login.jpg');
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-background {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    min-height: 384px;
+    border-radius: 6px;
+    padding: 3px;
+    background-color: rgba(#FFFFFF, 0.3);
+    
+    .login-title {
+      color: #FFFFFF;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .login-form {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      padding: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .login-form__logo {
+        display: flex;
+        justify-content: center;
+        margin-right: 20px;
+        img {
+          width: 209px;
+          height: auto;
+        }
+      }
+
+      .login-form__groups {
+        display: flex;
+        flex-direction: column;
+
+        .login-form__groups__title {
+          color: #FFF;
+          text-align: center;
+        }
+        .groups-btn {
+          display: flex;
+          flex-direction: column;
+
+          .btn {
+            width: 300px;
+            border-radius: 40px;
+            height: 52px;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #FFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transform: scale(1);
+            transition: all .3s ease-in-out;
+
+            &:hover {
+              transform: scale(1.05);
+            }
+
+            &.btn-facebook {
+              background-color: #3B5998;
+
+              &:hover {
+                background-color: rgba( #3B5998, .9)
+              }
+            }
+            &.btn-google {
+              background-color: #dd4b39;
+
+              &:hover {
+                background-color: rgba( #dd4b39, .9)
+              }
+            }
+            &.btn-zalo {
+              background-color: #45bbff;
+
+              &:hover {
+                background-color: rgba( #45bbff, .9)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

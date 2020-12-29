@@ -1,0 +1,56 @@
+.container {
+  height: 1000px;
+}
+
+.filter-film {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #FFF;
+  border-radius: 6px;
+  height: 80px;
+  box-shadow: 0 0 10px rgba(0,0,0,.3);
+
+  .select {
+    min-width: 150px;
+    flex-grow: 1;
+    &:first-child {
+      min-width: 282px;
+      flex-grow: 2;
+    }
+  }
+
+  .btn {
+    flex-grow: 1;
+    min-width: 150px;
+    max-width: 150px;
+    margin: 0;
+    min-height: 40px;
+    max-height: 40px;
+    background-color: #fb4226;
+    color: #FFF;
+    font-weight: 500;
+    margin-right: 10px;
+
+    &:hover {
+      color: #FFF;
+    }
+
+    &.btn-disabled {
+      background-color: #475365;
+
+      &:hover {
+        transform: none !important;
+        cursor: default !important;
+      }
+    }
+  }
+}
+
+.list-film {
+  margin-top: 15px;
+}
+
+.create-room {
+  margin: 20px 0;
+}

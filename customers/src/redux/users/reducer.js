@@ -2,10 +2,12 @@ import UsersTypes from './types';
 // import update from 'immutability-helper';
 
 const initialState = {
-  state: true,
+  status: true,
   user: null,
   token: null,
-  isRegister: false
+  isRegister: false,
+  header: true,
+  footer: true
 }
 
 export default function userReducer(state = initialState, action) {
@@ -39,6 +41,12 @@ export default function userReducer(state = initialState, action) {
       localStorage.removeItem('token')
       localStorage.removeItem('userID')
       newState = Object.assign({}, state, { token: null, user: null, friends: [] });
+      break;
+    case UsersTypes.LOGIN_TEST_SUCCESS:
+      newState = Object.assign({}, state, { user: payload });
+      break;
+    case UsersTypes.UPDATE_HF_SUCCESS:
+      newState = Object.assign({}, state, { header: payload.header, footer: payload.footer });
       break;
     default: 
       newState = state;

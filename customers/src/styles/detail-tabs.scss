@@ -1,0 +1,262 @@
+.detail-content {
+  min-width: 870px;
+  margin: 0 auto;
+
+  .detail-tab-list {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+
+    &>.react-tabs__tab {
+      border: none;
+      background: transparent;
+      font-size: 25px;
+      font-weight: bold;
+      color: #FFF;
+
+      &.react-tabs__tab--selected {
+        color: #fb4226;
+      }
+    }
+  }
+
+  .detail-tab-threater {
+    &.react-tabs__tab-panel--selected {
+      height: 600px;
+      border-radius: 6px;
+      background: #FFF;
+    }
+  }
+
+  .detail-tab-info {
+    display: flex;
+    flex-direction: row;
+    width: 870px;
+
+    .detail-info__info {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      flex: 1;
+
+      tr {
+        height: 40px;
+      }
+      th {
+        font-size: 18px;
+      }
+    }
+
+    .detail-info__content {
+      flex: 1;
+      flex-grow: 1;
+
+      &__title {
+        font-weight: bold;
+        font-size: 18px;
+      }
+    }
+    &.react-tabs__tab-panel--selected {
+      // height: 600px;
+      border-radius: 6px;
+      color: #FFF;
+    }
+  }
+
+  .detail-tab-comment {
+    .card-comment {
+      background-color: #FFF;
+      max-width: 580px;
+      min-height: 50px;
+      margin: 0 auto;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      color: #333;
+      input {
+        width: 100%;
+        min-height: 50px;
+        border: none;
+        border-radius: 6px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    &.react-tabs__tab-panel--selected {
+      border-radius: 6px;
+    }
+  }
+
+  .threater {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    .threater-list {
+      list-style-type: none;
+      padding: 0;
+      max-width: 243px;
+      border-right: 1px solid rgba(#808EA2, 0.5);
+      height: 100%;
+      margin: 0;
+
+      .threater-list__item {
+        min-width: 242px;
+        display: flex;
+        flex-direction: row;
+        padding: 15px;
+        opacity: 0.5;
+        transition: opacity 0.3 ease;
+        cursor: pointer;
+
+        img {
+          margin-right: 10px;
+        }
+        &>div {
+          display: flex;
+          align-items: center;
+          font-size: 20px;
+          font-weight: 500;
+        }
+
+        &.react-tabs__tab--selected {
+          opacity: 1;
+        }
+      }
+    }
+
+    .threater-content {
+      &.react-tabs__tab-panel--selected {
+        width: 100%;
+      }
+    }
+  }
+
+  .date {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .date-list {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+      height: 90px;
+
+      .date-list__item {
+        width: 90px;
+        height: 100%;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: pointer;
+
+        span {
+          &:nth-child(1) {
+            font-size: 16px;
+          }
+          &:nth-child(2) {
+            font-size: 20px;
+          }
+        }
+
+        &.react-tabs__tab--selected {
+          span {
+            color: #fb4226;
+          }
+        }
+      }
+    }
+  }
+
+  .threater-detail {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 10px;
+
+    .threater-detail__threater {
+      display: flex;
+      flex-direction: row;
+
+      .threater-detail__image {
+        img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .threater-detail__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 10px;
+
+
+        .threater-detail__name {
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .threater-detail__address {
+          font-size: 14px;
+          color: #ACB8CE;
+        }
+      }
+    }
+
+    .threater-detail__schedule {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+
+      .threater-detail__title {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .threater-detail__list-time {
+        display: flex;
+        flex-direction: row;
+
+        .time-film {
+          border: 1px solid #ACB8CE;
+          border-radius: 6px;
+          padding: 6px;
+          margin: 5px;
+          cursor: pointer;
+
+          span {
+            font-size: 14px;
+            color: #9b9b9b;
+            font-weight: 600;
+            &:nth-child(1) {
+              color: #108f3e;
+              font-size: 18px;
+            }
+          }
+
+          &:hover {
+            box-shadow: 0 0 10px rgba(0,0,0,.3);
+            span:nth-child(1) {
+              color: #fb4226;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .react-tabs__tab-panel {
+    border-radius: 6px;
+    background-color: #FFF;
+  }
+}

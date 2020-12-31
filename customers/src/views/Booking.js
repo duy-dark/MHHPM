@@ -1,0 +1,223 @@
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from "react-redux";
+import { updateHeaderFooter } from "../redux/users/actions";
+import '../styles/booking.scss';
+import screen from "../assets/screen.png";
+import icBHD from '../assets/ic_bhd.png';
+import icDDC from '../assets/ic_ddc.png';
+import icCIN from '../assets/ic_cinestar.png';
+import icLOT from '../assets/ic_lotte.png';
+import { useLocation, useHistory } from 'react-router-dom';
+
+const SeatEl = (props) => {
+  const [status, setStatus] = useState();
+  const selectSeat = (seat) => {
+    if (props.seats.length < 10) {
+      !status ? setStatus(seat) : setStatus('')
+      props.onSelect(seat);
+    } else {
+      if (props.seats.includes(seat)) {
+        !status ? setStatus(seat) : setStatus('')
+        props.onSelect(seat);
+      } else {
+        alert('không được mua quá 10 vé')
+      }
+    }
+  }
+  const formatSeat = (seat) => seat && seat.slice(-2)
+  return (
+    <span className="seat-wrapper" onClick={() => selectSeat(props.seat)}>
+      <span className={`seat ${!!status ? 'seat--selected' : ''}`}>
+        <span className="s-img">{formatSeat(status)}</span>
+      </span>
+    </span>
+  )
+}
+
+const RowSeatEl = (props) => {
+  const selectSeat = (seat) => {
+    props.onSelectSeat(seat);
+  }
+  return (
+    <div className="row-seat">
+      <span className="seat-wrapper">
+        <span className="seat seat--name">{props.name}</span>
+      </span>
+      { props.rows.map((row, index) => {
+        return (<SeatEl key={`${index}`} seat={row} seats={props.seats} onSelect={seat => selectSeat(seat)}/>)
+      })}
+    </div>
+  )
+}
+
+export default function Booking(props) {
+  let location = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [movies, setMovies] = useState(location.state);
+  const [seats, setSeats] = useState([]);
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const listSeat = [
+    {
+      name: 'A',
+      rows: ['A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09', 'A10', 'A11', 'A12', 'A13', 'A14']
+    },
+    {
+      name: 'B',
+      rows: ['B01', 'B02', 'B03', 'B04', 'B05', 'B06', 'B07', 'B08', 'B09', 'B10', 'B11', 'B12', 'B13', 'B14']
+    },
+    {
+      name: 'C',
+      rows: ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'C09', 'C10', 'C11', 'C12', 'C13', 'C14']
+    },
+    {
+      name: 'D',
+      rows: ['D01', 'D02', 'D03', 'D04', 'D05', 'D06', 'D07', 'D08', 'D09', 'D10', 'D11', 'D12', 'D13', 'D14']
+    },
+    {
+      name: 'E',
+      rows: ['E01', 'E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E11', 'E12', 'E13', 'E14']
+    },
+    {
+      name: 'F',
+      rows: ['F01', 'F02', 'F03', 'F04', 'F05', 'F06', 'F07', 'F08', 'F09', 'F10', 'F11', 'F12', 'F13', 'F14']
+    },
+    {
+      name: 'G',
+      rows: ['G01', 'G02', 'G03', 'G04', 'G05', 'G06', 'G07', 'G08', 'G09', 'G10', 'G11', 'G12', 'G13', 'G14']
+    },
+    {
+      name: 'H',
+      rows: ['H01', 'H02', 'H03', 'H04', 'H05', 'H06', 'H07', 'H08', 'H09', 'H10', 'H11', 'H12', 'H13', 'H14']
+    },
+    {
+      name: 'I',
+      rows: ['I01', 'I02', 'I03', 'I04', 'I05', 'I06', 'I07', 'I08', 'I09', 'I10', 'I11', 'I12', 'I13', 'I14']
+    },
+    {
+      name: 'J',
+      rows: ['J01', 'J02', 'J03', 'J04', 'J05', 'J06', 'J07', 'J08', 'J09', 'J10', 'J11', 'J12', 'J13', 'J14']
+    }
+  ]
+
+  const disabledBtn = !(seats.length > 0 && email && phone)
+
+  const selectSeat = (seat) => {
+    if (seats.length <= 10) {
+      if (seats.includes(seat)) {
+        let arr = [...seats]
+        let index = arr.indexOf(seat)
+        arr.splice(index, 1)
+        setSeats([...arr])
+      } else {
+        setSeats([...seats, seat])
+      }
+    }
+  }
+
+  const formatMoney = (number) => {
+    return new Intl.NumberFormat().format(number)
+  }
+
+  const bookingTicket = () => {
+    history.push({
+      pathname: '/completed'
+    })
+  }
+
+  const icCinemas = () => {
+    if (movies) {
+      const { typeThreater } = movies
+      switch(typeThreater) {
+        case 'bhd':
+          return icBHD
+        case 'cinestar':
+          return icCIN
+        case 'ddc':
+          return icDDC
+        case 'lotte':
+          return icLOT
+        default:
+          break;
+      }
+    } else {
+      return icBHD
+    }
+  }
+
+  useEffect(() => {
+    dispatch(updateHeaderFooter({
+      header: true,
+      footer: true
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  return (
+    <div className="booking">
+      <div className="booking-content">
+        <div className="booking-content__header">
+          <img src={icCinemas()} alt=""/>
+          <div className="booking-content__threater">
+            <div className="booking-content__threater__name">{movies && movies.threater}</div>
+            <div className="booking-content__threater__room">{`${movies.date.name} - ${movies.date.date} - ${movies.timeStart} - ${movies.room}`}</div>
+          </div>
+        </div>
+        <div className="booking-content__screen">
+          <img src={screen} alt=""/>
+        </div>
+        <div className="booking-content__list-seats">
+          { listSeat.map((row, index) => <RowSeatEl key={index} seats={seats} {...row} onSelectSeat={seat => selectSeat(seat)}/>)}
+        </div>
+        <div className="booking-content__des">
+          <div className="type-seat">
+            <span className="seat-wrapper">
+              <span className="seat"><span className="s-img"></span></span>
+            </span>
+            <span>Ghế thường</span>
+          </div>
+          <div className="type-seat">
+            <span className="seat-wrapper">
+              <span className="seat seat--vip"><span className="s-img"></span></span>
+            </span>
+            <span>Ghế vip</span>
+          </div>
+        </div>
+      </div>
+      <div className="booking-form">
+        <div className="booking-form__input booking-form__total">
+          <p>{formatMoney(seats.length * 80000)}đ</p>
+        </div>
+        <div className="booking-form__input booking-form__film-name">
+          <div className="booking-form__name">{movies.name}</div>
+          <div className="booking-form__threater">{movies.threater}</div>
+          <div className="booking-form__address">{`${movies.date.name} - ${movies.date.date} - ${movies.timeStart} - ${movies.room}`}</div>
+        </div>
+        <div className="booking-form__input booking-form__seats">
+          Ghế {seats.map((seat, index) => {
+              return (
+                <span>{index > 0 ? ', ' : ''}{seat}</span>
+              )
+            })}
+          
+        </div>
+        <div className="booking-form__input booking-form__email">
+          <p>Email</p>
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)}/>
+        </div>
+
+        <div className="booking-form__input booking-form__phone">
+          <p>Phone</p>
+          <input type="text" value={phone} onChange={e => setPhone(e.target.value)}/>
+        </div>
+        <div className="booking-form__input booking-form__payment">
+          <p>Hình thức thanh toán</p>
+          <div className="group-radio">
+
+          </div>
+        </div>
+        <button className={`booking-form-btn ${disabledBtn ? 'booking-form-btn--disabled' : ''}`} onClick={bookingTicket}>Đặt Vé</button>
+      </div>
+    </div>
+  )
+}

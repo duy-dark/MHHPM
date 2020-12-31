@@ -51,6 +51,23 @@ function* fetchLogout(action) {
   } catch (err) { throw err; }
 }
 
+function* fetchUpdateHF(action) {
+  try {
+    let { status } = action;
+    yield put({ type: UsersTypes.UPDATE_HF_SUCCESS, payload: status });
+
+  } catch (err) { throw err; }
+}
+
+function* fetchLoginTest(action) {
+  try {
+    let { user, history } = action;
+    yield put({ type: UsersTypes.LOGIN_TEST_SUCCESS, payload: user });
+    history.push('/');
+
+  } catch (err) { throw err; }
+}
+
 function* signup() {
   yield takeEvery(UsersTypes.LOGIN, fetchLogin);
 }
@@ -71,12 +88,22 @@ function* signout() {
   yield takeEvery(UsersTypes.LOGOUT, fetchLogout);
 }
 
+function* signTest() {
+  yield takeEvery(UsersTypes.LOGIN_TEST, fetchLoginTest);
+}
+
+function* updateHF() {
+  yield takeEvery(UsersTypes.UPDATE_HF, fetchUpdateHF);
+}
+
 export default function* usersSaga() {
   yield all([
     signup(),
     getListFriend(),
     getUserInfo(),
     updateStatusFriend(),
-    signout()
+    signout(),
+    signTest(),
+    updateHF()
   ]);
 }

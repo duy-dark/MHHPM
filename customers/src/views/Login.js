@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/login/login.scss";
 import logo from "../assets/images-2.png";
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { signTest, updateHeaderFooter } from "../redux/users/actions";
+
 export default function Login(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const user = {
+    name: 'Phạm Quang Duy',
+    email: 'example@example.com'
+  }
+  const login = () => {
+    dispatch(signTest(user, history))
+  }
+
+  useEffect(() => {
+    dispatch(updateHeaderFooter({
+      header: false,
+      footer: false
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div className="login">
       <div className="login-background">
@@ -12,15 +33,15 @@ export default function Login(props) {
           </div>
           <div className="login-form__groups">
             <div className="groups-btn">
-              <a href="https://www.facebook.com/" className="btn btn-facebook">
+              <button onClick={login} className="btn btn-facebook">
                 Login with Facebook
-              </a>
-              <a href="https://www.facebook.com/" className="btn btn-zalo">
+              </button>
+              <button onClick={login} className="btn btn-zalo">
                 Login with Zalo
-              </a>
-              <a href="https://www.facebook.com/" className="btn btn-google">
+              </button>
+              <button onClick={login} className="btn btn-google">
                 Login with Google
-              </a>
+              </button>
             </div>
           </div>
         </div>

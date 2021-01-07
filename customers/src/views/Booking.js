@@ -4,9 +4,6 @@ import { updateHeaderFooter } from "../redux/users/actions";
 import '../styles/booking.scss';
 import screen from "../assets/screen.png";
 import icBHD from '../assets/ic_bhd.png';
-import icDDC from '../assets/ic_ddc.png';
-import icCIN from '../assets/ic_cinestar.png';
-import icLOT from '../assets/ic_lotte.png';
 import { useLocation, useHistory } from 'react-router-dom';
 
 const SeatEl = (props) => {
@@ -43,9 +40,7 @@ const RowSeatEl = (props) => {
       <span className="seat-wrapper">
         <span className="seat seat--name">{props.name}</span>
       </span>
-      { props.rows.map((row, index) => {
-        return (<SeatEl key={`${index}`} seat={row} seats={props.seats} onSelect={seat => selectSeat(seat)}/>)
-      })}
+      { props.rows.map(row => <SeatEl key={`${row}`} seat={row} seats={props.seats} onSelect={seat => selectSeat(seat)}/> )}
     </div>
   )
 }
@@ -126,26 +121,6 @@ export default function Booking(props) {
     })
   }
 
-  const icCinemas = () => {
-    if (movies) {
-      const { typeThreater } = movies
-      switch(typeThreater) {
-        case 'bhd':
-          return icBHD
-        case 'cinestar':
-          return icCIN
-        case 'ddc':
-          return icDDC
-        case 'lotte':
-          return icLOT
-        default:
-          break;
-      }
-    } else {
-      return icBHD
-    }
-  }
-
   useEffect(() => {
     dispatch(updateHeaderFooter({
       header: true,
@@ -153,14 +128,15 @@ export default function Booking(props) {
     }))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <div className="booking">
       <div className="booking-content">
         <div className="booking-content__header">
-          <img src={icCinemas()} alt=""/>
+          <img src={icBHD} alt=""/>
           <div className="booking-content__threater">
             <div className="booking-content__threater__name">{movies && movies.threater}</div>
-            <div className="booking-content__threater__room">{`${movies.date.name} - ${movies.date.date} - ${movies.timeStart} - ${movies.room}`}</div>
+            <div className="booking-content__threater__room">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
           </div>
         </div>
         <div className="booking-content__screen">
@@ -191,7 +167,7 @@ export default function Booking(props) {
         <div className="booking-form__input booking-form__film-name">
           <div className="booking-form__name">{movies.name}</div>
           <div className="booking-form__threater">{movies.threater}</div>
-          <div className="booking-form__address">{`${movies.date.name} - ${movies.date.date} - ${movies.timeStart} - ${movies.room}`}</div>
+          <div className="booking-form__address">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
         </div>
         <div className="booking-form__input booking-form__seats">
           Ghế {seats.map((seat, index) => {

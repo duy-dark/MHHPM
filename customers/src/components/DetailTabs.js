@@ -2,34 +2,22 @@ import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import '../styles/detail-tabs.scss';
-import icBHD from '../assets/ic_bhd.png';
-import icDDC from '../assets/ic_ddc.png';
-import icCIN from '../assets/ic_cinestar.png';
-import icLOT from '../assets/ic_lotte.png';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 const TimeFilm = (props) => {
   let history = useHistory();
-  const date = [
-    { name: 'Thứ 2', date: '2020/12/28' },
-    { name: 'Thứ 3', date: '2020/12/29' },
-    { name: 'Thứ 4', date: '2020/12/30' },
-    { name: 'Thứ 5', date: '2020/12/31' },
-    { name: 'Thứ 6', date: '2021/01/01' },
-    { name: 'Thứ 7', date: '2020/01/02' },
-    { name: 'Chủ nhật', date: '2020/01/03' },
-  ]
   const bookingSeat = () => {
     history.push({
       pathname: '/booking/' + props.nameMovie,
       state: { 
-        threater: props.name,
-        threaterImg: props.image,
+        threater: props.threater,
         address: props.address,
         room: props.room,
         name: props.nameMovie,
         timeStart: props.timeStart,
-        date: date[props.dateSelected],
+        date: props.date,
+        day: props.name,
         typeThreater: props.threater
       }
     })
@@ -46,15 +34,6 @@ const TimeFilm = (props) => {
 const ThreaterDetail = (props) => {
   return (
     <div className="threater-detail">
-      <div className="threater-detail__threater">
-        <div className="threater-detail__image">
-          <img src={`${props.image}`} alt=""/>
-        </div>
-        <div className="threater-detail__content">
-          <div className="threater-detail__name">{props.name}</div>
-          <div className="threater-detail__address">{props.address}</div>
-        </div>
-      </div>
       <div className="threater-detail__schedule">
         <div className="threater-detail__title">2D Digital</div>
         <div className="threater-detail__list-time">
@@ -70,18 +49,16 @@ const TabsDate = (props) => {
   return (
     <Tabs className="date" onSelect={index => setDate(index)}>
       <TabList className="date-list">
-        <Tab className="date-list__item"><span>Thứ 2</span><span>28</span></Tab>
-        <Tab className="date-list__item"><span>Thứ 3</span><span>29</span></Tab>
-        <Tab className="date-list__item"><span>Thứ 4</span><span>30</span></Tab>
-        <Tab className="date-list__item"><span>Thứ 5</span><span>31</span></Tab>
-        <Tab className="date-list__item"><span>Thứ 6</span><span>01</span></Tab>
-        <Tab className="date-list__item"><span>Thứ 7</span><span>02</span></Tab>
-        <Tab className="date-list__item"><span>chủ nhật</span><span>03</span></Tab>
+        { props.listDate.map((item, index) => {
+          return (
+            <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{moment(item.date).format('DD')}</span></Tab>
+          )
+        })}
       </TabList>
       { props.listDate.map((item, index) => {
         return (
           <TabPanel key={index}>
-            { item.length > 0 && item.map((i, index1) => <ThreaterDetail key={index1} threater={props.threater} nameMovie={props.nameMovie} {...i} dateSelected={date}/>) }
+            <ThreaterDetail threater={props.threater} nameMovie={props.nameMovie} {...item} listTime={props.listTime[index]} dateSelected={date}/>
           </TabPanel>
         )
       })}
@@ -90,147 +67,324 @@ const TabsDate = (props) => {
 }
 
 export default function DetailTabs(props) {
-  const bhd = {
-    listDate: [
-      [
+
+  const filmSchedule = [
+    {
+      id: 1,
+      image: '/assets/threater1.jpg',
+      name: 'BHD Star - Vincom 3/2',
+      address: 'L5-Vincom 3/2, 3C Đường 3/2, Q.10',
+      listDate: [
         {
-          image: '/assets/threater1.jpg',
-          name: 'BHD Star - Vincom 3/2',
-          address: 'L5-Vincom 3/2, 3C Đường 3/2, Q.10',
-          listTime: [
-            {
-              timeStart: '14:10',
-              timeEnd: '15:50',
-              room: 'rạp 1'
-            },
-            {
-              timeStart: '17:05',
-              timeEnd: '18:45',
-              room: 'rạp 2'
-            },
-            {
-              timeStart: '19:45',
-              timeEnd: '21:25',
-              room: 'rạp 3'
-            }
-          ]
+          name: 'Thứ 2',
+          date: '2021/01/04'
         },
         {
-          image: '/assets/threater2.jpg',
-          name: 'BHD Star - Bitexco',
-          address: 'L3-Bitexco Icon 68, 2 Hải Triều, Q.1',
-          listTime: [
-            {
-              timeStart: '12:10',
-              timeEnd: '13:50',
-              room: 'rạp 1'
-            },
-            {
-              timeStart: '14:05',
-              timeEnd: '15:45',
-              room: 'rạp 2'
-            },
-            {
-              timeStart: '16:45',
-              timeEnd: '18:25',
-              room: 'rạp 3'
-            }
-          ]
-        }
-      ],
-      [
-        {
-          image: '/assets/threater1.jpg',
-          name: 'BHD Star - Vincom 3/2',
-          address: 'L5-Vincom 3/2, 3C Đường 3/2, Q.10',
-          listTime: [
-            {
-              timeStart: '1:10',
-              timeEnd: '2:50',
-              room: 'rạp 1'
-            },
-            {
-              timeStart: '3:05',
-              timeEnd: '4:45',
-              room: 'rạp 2'
-            },
-            {
-              timeStart: '5:45',
-              timeEnd: '7:25',
-              room: 'rạp 3'
-            }
-          ]
+          name: 'Thứ 3',
+          date: '2021/01/05'
         },
         {
-          image: '/assets/threater2.jpg',
-          name: 'BHD Star - Bitexco',
-          address: 'L3-Bitexco Icon 68, 2 Hải Triều, Q.1',
-          listTime: [
-            {
-              timeStart: '7:10',
-              timeEnd: '9:50',
-              room: 'rạp 1'
-            },
-            {
-              timeStart: '8:05',
-              timeEnd: '10:45',
-              room: 'rạp 2'
-            },
-            {
-              timeStart: '11:45',
-              timeEnd: '13:25',
-              room: 'rạp 3'
-            }
-          ]
-        }
-      ],
-      [],
-      [],
-      [],
-      [],
-      []
-    ]
-  }
-  const cin = {
-    listDate: [
-      [
+          name: 'Thứ 4',
+          date: '2021/01/06'
+        },
         {
-          image: '/assets/threatercin1.jpg',
-          name: 'CNS - Quốc Thanh',
-          address: '271 Nguyễn Trãi, Q.1',
-          listTime: [
-            {
-              timeStart: '14:10',
-              timeEnd: '15:50',
-              room: 'rạp 1'
-            },
-            {
-              timeStart: '17:05',
-              timeEnd: '18:45',
-              room: 'rạp 2'
-            },
-            {
-              timeStart: '19:45',
-              timeEnd: '21:25',
-              room: 'rạp 3'
-            }
-          ]
+          name: 'Thứ 5',
+          date: '2021/01/07'
+        },
+        {
+          name: 'Thứ 6',
+          date: '2021/01/08'
+        },
+        {
+          name: 'Thứ 7',
+          date: '2021/01/09'
+        },
+        {
+          name: 'Chủ nhật',
+          date: '2021/01/10'
         }
       ],
-      [],
-      [],
-      [],
-      [],
-      [],
-      []
-    ]
-  }
-  const ddc = {
-    listDate: [[], [], [], [], [], [], []]
-  }
-  const lotte = {
-    listDate: [[], [], [], [], [], [], []]
-  }
+      listTime: [
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ]
+      ]
+    },
+    {
+      id: 2,
+      image: '/assets/threater2.jpg',
+      name: 'BHD Star - Bitexco',
+      address: 'L3-Bitexco Icon 68, 2 Hải Triều, Q.1',
+      listDate: [
+        {
+          name: 'Thứ 2',
+          date: '2021/01/04'
+        },
+        {
+          name: 'Thứ 3',
+          date: '2021/01/05'
+        },
+        {
+          name: 'Thứ 4',
+          date: '2021/01/06'
+        },
+        {
+          name: 'Thứ 5',
+          date: '2021/01/07'
+        },
+        {
+          name: 'Thứ 6',
+          date: '2021/01/08'
+        },
+        {
+          name: 'Thứ 7',
+          date: '2021/01/09'
+        },
+        {
+          name: 'Chủ nhật',
+          date: '2021/01/10'
+        }
+      ],
+      listTime: [
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ],
+        [
+          {
+            timeStart: '14:10',
+            timeEnd: '15:50',
+            room: 'rạp 1'
+          },
+          {
+            timeStart: '17:05',
+            timeEnd: '18:45',
+            room: 'rạp 2'
+          },
+          {
+            timeStart: '19:45',
+            timeEnd: '21:25',
+            room: 'rạp 3'
+          }
+        ]
+      ]
+    }
+  ]
+
   return (
     <Tabs className="detail-content">
       <TabList className="detail-tab-list">
@@ -242,36 +396,28 @@ export default function DetailTabs(props) {
       <TabPanel className="detail-tab-threater">
         <Tabs className="threater">
           <TabList className="threater-list">
-            <Tab className="threater-list__item">
-              <img src={icBHD} alt=""/>
-              <div>BHD Star</div>
-            </Tab>
-            <Tab className="threater-list__item">
-              <img src={icCIN} alt=""/>
-              <div>Cinestar</div>
-            </Tab>
-            <Tab className="threater-list__item">
-              <img src={icDDC} alt=""/>
-              <div>DDC - Đống Đa</div>
-            </Tab>
-            <Tab className="threater-list__item">
-              <img src={icLOT} alt=""/>
-              <div>Lotte Cinema</div>
-            </Tab>
+            { filmSchedule.map(item => {
+              return (
+                <Tab key={`threater${item.id}`} className="threater-list__item">
+                  <div className="threater-detail__image">
+                    <img src={`${item.image}`} alt=""/>
+                  </div>
+                  <div className="threater-detail__content">
+                    <div className="threater-detail__name">{item.name}</div>
+                    <div className="threater-detail__address">{item.address}</div>
+                  </div>
+                </Tab>
+              )
+            })}
+          
           </TabList>
-
-          <TabPanel className="threater-content">
-            <TabsDate {...bhd} nameMovie={props.name} threater="bhd"/>
-          </TabPanel>
-          <TabPanel className="threater-content">
-            <TabsDate {...cin} nameMovie={props.name} threater="cinestar"/>
-          </TabPanel>
-          <TabPanel className="threater-content">
-            <TabsDate {...ddc} nameMovie={props.name} threater="ddc"/>
-          </TabPanel>
-          <TabPanel className="threater-content">
-            <TabsDate {...lotte} nameMovie={props.name} threater="lotte"/>
-          </TabPanel>
+          { filmSchedule.map(item => {
+              return (
+                <TabPanel key={`id${item.id}`} className="threater-content">
+                  <TabsDate listDate={item.listDate} listTime={item.listTime} threater={item.name} nameMovie={props.name}/>
+                </TabPanel>
+              )
+            })}
         </Tabs>
       </TabPanel>
       <TabPanel className="detail-tab-info">

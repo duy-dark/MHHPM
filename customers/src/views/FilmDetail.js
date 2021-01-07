@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../styles/film-detail.scss';
-import bg from '../assets/slider/slider1.png';
-import poster from '../assets/film/film1.png';
 import DetailTabs from '../components/DetailTabs'
 import { useDispatch } from "react-redux";
 import { updateHeaderFooter } from "../redux/users/actions";

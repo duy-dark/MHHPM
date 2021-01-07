@@ -1,5 +1,4 @@
 import React from 'react';
-import image from '../assets/film/film1.png';
 import clock from '../assets/img-clock.png';
 import starLight from '../assets/star-light.svg';
 import starDark from '../assets/star-dark.svg';

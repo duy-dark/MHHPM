@@ -39,6 +39,7 @@
 
     &.btn-disabled {
       background-color: #475365;
+      pointer-events: none;
 
       &:hover {
         transform: none !important;

@@ -189,7 +189,18 @@ export default function Booking(props) {
         <div className="booking-form__input booking-form__payment">
           <p>Hình thức thanh toán</p>
           <div className="group-radio">
-
+            <div className="radio-form">
+              <input id="visa" name="payment" type="radio" />
+              <label htmlFor="visa">Thanh Toán Visa</label>
+            </div>
+            <div className="radio-form">
+              <input id="noidia" name="payment" type="radio" />
+              <label htmlFor="noidia">Thanh Toán Nội Địa</label>
+            </div>
+            <div className="radio-form">
+              <input id="online" name="payment" type="radio" />
+              <label htmlFor="online">Thanh Toán Online</label>
+            </div>
           </div>
         </div>
         <button className={`booking-form-btn ${disabledBtn ? 'booking-form-btn--disabled' : ''}`} onClick={bookingTicket}>Đặt Vé</button>

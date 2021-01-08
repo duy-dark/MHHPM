@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import '../styles/home.scss';
 import { useDispatch } from "react-redux";
 import { updateHeaderFooter } from "../redux/users/actions";
-
+import { useHistory } from 'react-router-dom';
 import SliderMovies from '../components/SliderMovies';
 import CardFilm from '../components/CardFilm';
 import Select, { components } from 'react-select';
 
 export default function Home(props) {
+  let history = useHistory();
   
   const [selectFilm, setSelectFilm] = useState();
   const [selectThreater, setSelectThreater] = useState();
@@ -21,10 +22,10 @@ export default function Home(props) {
     { value: 4, label: `Doraemon: Nobita và Những Bạn Khủng Long Mới - Doraemon the Movie: Nobita's New Dinosaurs (P)`},
   ]
   const optionsThreater = selectFilm ? [
-    { value: 1, label: 'BHD Star Bitexco'},
-    { value: 2, label: 'BHD Star Vincom 3/2'},
-    { value: 3, label: 'BHD Star Vincom Lê Văn Việt'},
-    { value: 4, label: `BHD Star Vincom Quang Trung`},
+    { value: 1, label: 'BHD Star Bitexco', address: 'L5-Vincom 3/2, 3C Đường 3/2, Q.10'},
+    { value: 2, label: 'BHD Star Vincom 3/2', address: 'Tầng 5, TTTM Vincom 3/2, 3C Đường 3/2, Quận 10, TPHCM'},
+    { value: 3, label: 'BHD Star Vincom Lê Văn Việt', address: 'Tầng 4, toà nhà Vincom Plaza Lê Văn Việt, số 50 Lê Văn Việt, Quận 9, TP.HCM'},
+    { value: 4, label: `BHD Star Vincom Quang Trung`, address: 'Tầng B1&B2, TTTM Vincom, số 190 Quang Trung, Gò Vấp, Tp.HCM'},
   ] : [{ label: 'vui lòng chọn phim', isDisabled: true}]
   const optionsDate = selectFilm ? [
     { value: 1, label: 'Thứ 2', date: '2020/01/01'},
@@ -36,8 +37,8 @@ export default function Home(props) {
     { value: 7, label: 'Chủ nhật', date: '2020/01/07'},
   ] : [{ label: 'vui lòng chọn rạp', isDisabled: true}]
   const optionsTime = selectDate && selectThreater ? [
-    { value: 1, label: '17:55~19:25'},
-    { value: 2, label: '20:55~22:25'}
+    { value: 1, label: '17:55~19:25', room: 'rap-1'},
+    { value: 2, label: '20:55~22:25', room: 'rap-2'}
   ] : [{ label: 'vui lòng chọn ngày', isDisabled: true}]
   const disabledBtn = selectFilm && selectThreater && selectDate && selectTime
   const OptionComponent = (props) => {
@@ -86,6 +87,21 @@ export default function Home(props) {
     }
   ]
 
+  const BookingTicketFast = () => {
+    history.push({
+      pathname: '/booking/' + selectFilm.label,
+      state: { 
+        threater: selectThreater.label,
+        address: selectThreater.address,
+        room: selectTime.room,
+        name: selectFilm.label,
+        timeStart: selectTime.label,
+        date: selectDate.date,
+        day: selectDate.label,
+        typeThreater: selectThreater.label
+      }})
+  }
+
   useEffect(() => {
     dispatch(updateHeaderFooter({
       header: true,
@@ -127,7 +143,7 @@ export default function Home(props) {
             onChange={setSelectTime}
             placeholder="Suất chiếu"
           />
-          <button className={"btn btn-booking" + (disabledBtn ? '' : ' btn-disabled')}>MUA VÉ NGAY</button>
+          <button className={"btn btn-booking" + (disabledBtn ? '' : ' btn-disabled')} onClick={BookingTicketFast}>MUA VÉ NGAY</button>
         </div>
         <div className="list-film">
           { list.map(movie =>  <CardFilm {...movie} />) }

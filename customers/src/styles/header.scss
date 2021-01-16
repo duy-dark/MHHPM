@@ -2,15 +2,66 @@
 @import "./color";
 
 @media only screen and (min-width: $breakpoint_sm) {
+  .btn {
+    min-width: 100px;
+  }
+  .dropdownUser {
+    .dropdown-menu {
+      top: -7px !important;
+      width: 100%;
+    }
+    .dropdown-toggle {
+      background-color: white;
+      color: #000;
+      border-color: white;
+    }
+    .btn-success {
+      &:hover {
+        background-color: white;
+        color: #000;
+        border-color: white;
+      }
+      &:not(:disabled):active {
+        &:not(.disabled):active:focus {
+          box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
+        }
+        background-color: white;
+        color: #000;
+        border-color: white;
+      }
+      &:focus {
+        background-color: white;
+        color: #000;
+        border-color: white;
+        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
+      }
+    }
+    &.show > .btn-success.dropdown-toggle {
+      background-color: white;
+      color: #000;
+      border-color: white;
+    }
+    .btn-success:not(:disabled):not(.disabled):active {
+      background-color: white;
+      color: #000;
+      border-color: white;
+    }
+    &.show > .btn-success.dropdown-toggle:focus {
+      background-color: white;
+      color: #000;
+      border-color: white;
+      box-shadow: 0 0 0 0.2rem rgba(90, 90, 90, 0.5);
+    }
+  }
   .header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #FFF;
+    background-color: #fff;
     height: 60px;
     padding: 0 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     // position: fixed;
     // top: 0;
 
@@ -39,7 +90,7 @@
           img {
             width: 30px;
             height: 30px;
-            border-radius:  50%;
+            border-radius: 50%;
             margin-right: 10px;
           }
 

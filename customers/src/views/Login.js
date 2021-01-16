@@ -62,14 +62,11 @@ export default function Login(props) {
                     onClick={renderProps.onClick}
                     className="btn btn-facebook"
                   >
-                    Login with Facebook
+                    Đăng nhập với Facebook
                   </button>
                 )}
               />
 
-              <button onClick={login} className="btn btn-zalo">
-                Login with Zalo
-              </button>
               <GoogleLogin
                 clientId="827380774255-d0ksdk40jlq25n7g7okdgdl7hm073iip.apps.googleusercontent.com"
                 onSuccess={responseGoogle}
@@ -82,10 +79,16 @@ export default function Login(props) {
                     disabled={renderProps.disabled}
                     className="btn btn-google"
                   >
-                    Login with Google
+                    Đằng nhập với Google
                   </button>
                 )}
               />
+              <button
+                onClick={() => history.push("/")}
+                className="btn btn-zalo"
+              >
+                Trở về trang chủ
+              </button>
             </div>
           </div>
         </div>

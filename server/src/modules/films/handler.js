@@ -10,6 +10,7 @@ const getList = async (params) => {
       views: {
         _id: 1,
         name: 1,
+        trailer: 1,
         content: 1,
         countries: 1,
         long_time: 1,
@@ -23,7 +24,7 @@ const getList = async (params) => {
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
-        category_ids: 1
+        categories: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -40,6 +41,7 @@ const findById = async (id) => {
       views: {
         _id: 1,
         name: 1,
+        trailer: 1,
         content: 1,
         countries: 1,
         long_time: 1,
@@ -67,6 +69,7 @@ const postCreate = async (params) => {
   try {
     let lambda = {
       name: params.name || undefined,
+      trailer: params.trailer || undefined,
       content: params.content || undefined,
       countries: params.countries || undefined,
       long_time: params.long_time || undefined,
@@ -99,6 +102,7 @@ const putUpdate = async (id, params) => {
       conditions: {_id: id, is_deleted: false},
       params: {
         name: params.name || undefined,
+        trailer: params.trailer || undefined,
         content: params.content || undefined,
         countries: params.countries || undefined,
         long_time: params.long_time || undefined,

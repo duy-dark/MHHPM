@@ -8,7 +8,7 @@ let schema = new mongoose.Schema(
     customer_id: require('mongodb').ObjectID,
     film_schedule_id: require('mongodb').ObjectID,
     voucher_id: require('mongodb').ObjectID,
-    seat_ids: [require('mongodb').ObjectID],
+    seat_ids: [String],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date

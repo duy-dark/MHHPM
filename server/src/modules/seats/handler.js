@@ -9,6 +9,7 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
+        name: 1,
         column: 1,
         rows: 1,
         status: 1
@@ -27,6 +28,7 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
+        name: 1,
         column: 1,
         rows: 1,
         status: 1
@@ -42,6 +44,7 @@ const findById = async (id) => {
 const postCreate = async (params) => {
   try {
     let lambda = {
+      name: params.name || undefined,
       column: params.column || undefined,
       rows: params.rows || undefined,
       status: params.status || undefined,
@@ -61,6 +64,7 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
+        name: params.name || undefined,
         column: params.column || undefined,
         rows: params.rows || undefined,
         status: params.status || undefined,

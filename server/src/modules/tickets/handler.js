@@ -53,6 +53,46 @@ const findById = async (id) => {
   }
 };
 
+const emailCode = async (params) => {
+  try {
+    const code = makeCode();
+    let data = await Model.getByEmail(params.email);
+    if (!data || data.length < 1) {
+      throw {
+        status: 203,
+        detail: 'User is not existed!'
+      };
+    }
+    let dataChange = {
+      id: data[0].id,
+      emailCode: code
+    };
+    await Model.update(dataChange);
+
+    let mainOptions = {
+      // thiết lập đối tượng, nội dung gửi mail
+      from: 'example@example.com',
+      to: params.email,
+      subject: 'Mã Code change password',
+      html: contentCode(code) //Nội dung html mình đã tạo trên kia :))
+    };
+    await transporter.sendMail(mainOptions, (err, info) => {
+      if (err) {
+        throw {
+          status: 203,
+          detail: 'send mail error'
+        };
+      }
+    });
+    return resSuccess({
+      sendMail: true,
+      message: 'vui lòng kiểm tra mail để lấy mã code'
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 const postCreate = async (params) => {
   try {
     let lambda = {

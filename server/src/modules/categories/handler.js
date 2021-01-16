@@ -44,7 +44,7 @@ const postCreate = async (params) => {
       updated_at: moment.now()
     };
     let data = await Model.createByLambda(lambda);
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }

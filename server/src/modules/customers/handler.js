@@ -61,7 +61,7 @@ const findById = async (id) => {
         status: 204,
         detail: 'Customer not found'
       };
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }

@@ -30,6 +30,7 @@ router.get('/:id/detail', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+  console.log('hello');
   let params = req.body;
   handler
     .postCreate(params)

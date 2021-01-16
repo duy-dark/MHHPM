@@ -20,7 +20,7 @@ router.get('/nowshowing', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/commingson', (req, res, next) => {
+router.get('/commingsoon', (req, res, next) => {
   console.log('oke');
   let gte_start_date = new Date(moment.now());
   let lte_start_date = new Date(moment('2030-01-01', moment.ISO_8601));

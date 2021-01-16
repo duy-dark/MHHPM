@@ -1,1 +1,13 @@
-import FilmTypes from './types';
+import FilmTypes from "./types";
+
+export function getListFilmShowing() {
+  return {};
+}
+
+export function postBookingInfo(bookingInfo, history) {
+  return {
+    type: FilmTypes.POST_BOOKING_INFO,
+    payload: bookingInfo,
+    history: history,
+  };
+}

@@ -25,7 +25,7 @@
 
   .detail-tab-threater {
     &.react-tabs__tab-panel--selected {
-      height: 600px;
+      min-height: 600px;
       border-radius: 6px;
       background: #FFF;
     }
@@ -178,6 +178,7 @@
         span {
           &:nth-child(1) {
             font-size: 16px;
+            font-weight: bold;
           }
           &:nth-child(2) {
             font-size: 20px;

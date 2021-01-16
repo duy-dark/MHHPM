@@ -15,18 +15,19 @@ const TimeFilm = (props) => {
         address: props.address,
         room: props.room,
         name: props.nameMovie,
-        timeStart: props.timeStart,
+        timeStart: moment(props.time_start).format('hh:mm'),
         date: props.date,
         day: props.name,
-        typeThreater: props.threater
+        typeThreater: props.threater,
+        scheduleId: props._id
       }
     })
   }
   return (
     <div className="time-film" onClick={bookingSeat}>
-      <span>{props.timeStart}</span>
+      <span>{ moment(props.time_start).format('hh:mm')}</span>
       <span>~</span>
-      <span>{props.timeEnd}</span>
+      <span>{ moment(props.time_end).format('hh:mm') }</span>
     </div>
   )
 }
@@ -46,12 +47,13 @@ const ThreaterDetail = (props) => {
 
 const TabsDate = (props) => {
   const [date, setDate] = useState(0)
+  console.log(props.listDate)
   return (
     <Tabs className="date" onSelect={index => setDate(index)}>
       <TabList className="date-list">
         { props.listDate.map((item, index) => {
           return (
-            <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{moment(item.date).format('DD')}</span></Tab>
+            <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{item.day}</span></Tab>
           )
         })}
       </TabList>
@@ -67,7 +69,7 @@ const TabsDate = (props) => {
 }
 
 export default function DetailTabs(props) {
-
+  console.log(props)
   const filmSchedule = [
     {
       id: 1,
@@ -396,11 +398,11 @@ export default function DetailTabs(props) {
       <TabPanel className="detail-tab-threater">
         <Tabs className="threater">
           <TabList className="threater-list">
-            { filmSchedule.map(item => {
+            { props.filmSchedule.map(item => {
               return (
-                <Tab key={`threater${item.id}`} className="threater-list__item">
+                <Tab key={item._id} className="threater-list__item">
                   <div className="threater-detail__image">
-                    <img src={`${item.image}`} alt=""/>
+                    <img src={`${item.url_image}`} alt=""/>
                   </div>
                   <div className="threater-detail__content">
                     <div className="threater-detail__name">{item.name}</div>
@@ -411,13 +413,15 @@ export default function DetailTabs(props) {
             })}
           
           </TabList>
-          { filmSchedule.map(item => {
+          {
+            props.filmSchedule.map(item => {
               return (
-                <TabPanel key={`id${item.id}`} className="threater-content">
-                  <TabsDate listDate={item.listDate} listTime={item.listTime} threater={item.name} nameMovie={props.name}/>
+                <TabPanel key={item._id} className="threater-content">
+                  <TabsDate listDate={item.listDate} listTime={item.listTime} threater={item.name} nameMovie={props.filmDetail.name}/>
                 </TabPanel>
               )
-            })}
+            })
+          }
         </Tabs>
       </TabPanel>
       <TabPanel className="detail-tab-info">

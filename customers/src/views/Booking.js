@@ -298,13 +298,12 @@ export default function Booking(props) {
     const bookingInfo = {
       count: seats.length,
       customer_id: "5ffadbab529bd58b18ed2fe6",
-      film_schedule_id: "5ffadbab529bd58b18ed2fe6",
+      film_schedule_id: movies.scheduleId,
       seat_ids: seats,
       email: email,
       phone_number: phone,
       payment: payment,
     };
-    console.log("Sua customer_id");
     dispatch(postBookingInfo(bookingInfo, history));
   };
 

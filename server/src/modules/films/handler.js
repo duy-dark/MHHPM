@@ -59,11 +59,18 @@ const getDetail = async (params) => {
         film_schedules: 1
       }
     };
-    // let now = moment.now();
-    // let arrayDay = [];
-    // for (let i = 1; i < 7; i++) {
-    //   let day = now
-    // }
+    let arr = [];
+    let now = moment();
+    for (let i = 0; i < 7; i++) {
+      arr.push({
+        name: days[moment(now).add(i, 'days').day()],
+        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+      });
+    }
+    data.forEach((element) => {
+      element = {...element, listday: arr};
+    });
 
     let data = await Model.getDetail(lambda);
     return resSuccess(data);

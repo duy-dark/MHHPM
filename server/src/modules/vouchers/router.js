@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id/detail', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id)
     .then((val) => res.json(val))

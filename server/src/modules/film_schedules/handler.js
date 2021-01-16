@@ -23,7 +23,7 @@ const getList = async (params) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1
+        room: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -43,7 +43,7 @@ const findById = async (id) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1
+        room: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -60,7 +60,7 @@ const postCreate = async (params) => {
       time_end: params.time_end || undefined,
       film_id: params.film_id || undefined,
       theater_id: params.theater_id || undefined,
-      room_id: params.room_id || undefined,
+      room: params.room || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -81,7 +81,7 @@ const putUpdate = async (id, params) => {
         time_end: params.time_end || undefined,
         film_id: params.film_id || undefined,
         theater_id: params.theater_id || undefined,
-        room_id: params.room_id || undefined,
+        room: params.room || undefined,
         updated_at: moment.now()
       }
     };

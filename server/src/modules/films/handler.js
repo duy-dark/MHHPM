@@ -24,10 +24,42 @@ const getList = async (params) => {
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
-        categories: 1
+        category_ids: 1
       }
     };
     let data = await Model.findByLambda(lambda);
+    return resSuccess(data);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
+const getDetail = async (params) => {
+  try {
+    let lambda = {
+      conditions: {...params, is_deleted: false},
+      views: {
+        _id: 1,
+        name: 1,
+        trailer: 1,
+        content: 1,
+        countries: 1,
+        long_time: 1,
+        start_date: 1,
+        directors: 1,
+        actors: 1,
+        rates: 1,
+        rate_count: 1,
+        imdb: 1,
+        digitals: 1,
+        url_avatar: 1,
+        url_background: 1,
+        is_blockbuster: 1,
+        categories: 1,
+        film_schedules: 1
+      }
+    };
+    let data = await Model.getDetail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -55,10 +87,11 @@ const findById = async (id) => {
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
-        category_ids: 1
+        categories: 1,
+        film_schedules: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetail(lambda);
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -155,6 +188,7 @@ let getFilmInPeriod = async (params) => {
 };
 module.exports = {
   getList,
+  getDetail,
   findById,
   postCreate,
   putUpdate,

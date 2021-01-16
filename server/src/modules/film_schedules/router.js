@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
     time_end: req.query.time_end,
     film_id: req.query.film_id,
     theater_id: req.query.theater_id,
-    room_id: req.query.room_id
+    room: req.query.room
   };
   conditions = omitBy(conditions, isNil);
   handler

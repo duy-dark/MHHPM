@@ -29,31 +29,7 @@ let Collection = mongoose.model('Film', schema, 'films');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    // return await Collection.find(lambda.conditions, lambda.views);
-    return await Collection.aggregate([
-      {$match: lambda.conditions},
-      {
-        $lookup: {
-          from: 'categories',
-          localField: 'category_ids',
-          foreignField: '_id',
-          as: 'categories'
-        }
-      },
-      {
-        $addFields: {
-          categories: {
-            $map: {
-              input: '$categories',
-              in: {name: '$$this.name'}
-            }
-          }
-        }
-      },
-      {
-        $project: lambda.views
-      }
-    ]);
+    return await Collection.find(lambda.conditions, lambda.views);
   },
   createByLambda: async function (lambda) {
     return await Collection.insertMany(lambda);
@@ -74,9 +50,32 @@ module.exports = {
     ]);
   },
   getDetail: async function (lambda) {
-    console.log('lambda1111: ', lambda);
     return await Collection.aggregate([
       {$match: lambda.conditions},
+      {
+        $lookup: {
+          from: 'film_schedules',
+          localField: '_id',
+          foreignField: 'film_id',
+          as: 'film_schedules'
+        }
+      },
+      {
+        $addFields: {
+          film_schedules: {
+            $map: {
+              input: '$film_schedules',
+              in: {
+                _id: '$$this._id',
+                time_start: '$$this.time_start',
+                time_end: '$$this.time_end',
+                theater_id: '$$this.theater_id',
+                room: '$$this.room'
+              }
+            }
+          }
+        }
+      },
       {
         $lookup: {
           from: 'categories',

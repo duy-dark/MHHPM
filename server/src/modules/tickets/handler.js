@@ -15,7 +15,10 @@ const getList = async (params) => {
         customer_id: 1,
         film_schedule_id: 1,
         voucher_id: 1,
-        seat_ids: 1
+        seat_ids: 1,
+        email: 1,
+        phone_number: 1,
+        payment: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -37,7 +40,10 @@ const findById = async (id) => {
         customer_id: 1,
         film_schedule_id: 1,
         voucher_id: 1,
-        seat_ids: 1
+        seat_ids: 1,
+        email: 1,
+        phone_number: 1,
+        payment: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -57,6 +63,9 @@ const postCreate = async (params) => {
       film_schedule_id: params.film_schedule_id || undefined,
       voucher_id: params.voucher_id || undefined,
       seat_ids: params.seat_ids || undefined,
+      email: params.email || undefined,
+      phone_number: params.phone_number || undefined,
+      payment: params.payment || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -81,6 +90,9 @@ const putUpdate = async (id, params) => {
         film_schedule_id: params.film_schedule_id || undefined,
         voucher_id: params.voucher_id || undefined,
         seat_ids: params.seat_ids || undefined,
+        email: params.email || undefined,
+        phone_number: params.phone_number || undefined,
+        payment: params.payment || undefined,
         updated_at: moment.now()
       }
     };

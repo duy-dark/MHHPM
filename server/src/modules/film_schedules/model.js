@@ -6,7 +6,7 @@ let schema = new mongoose.Schema(
     time_end: Date,
     film_id: require('mongodb').ObjectId,
     theater_id: require('mongodb').ObjectId,
-    room_id: require('mongodb').ObjectId,
+    room: String,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date

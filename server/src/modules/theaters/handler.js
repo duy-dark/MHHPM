@@ -13,7 +13,7 @@ const getList = async (params) => {
         address: 1,
         url_image: 1,
         comment: 1,
-        room_ids: 1
+        rooms: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -33,7 +33,7 @@ const findById = async (id) => {
         address: 1,
         url_image: 1,
         comment: 1,
-        room_ids: 1
+        rooms: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -50,7 +50,7 @@ const postCreate = async (params) => {
       address: params.address || undefined,
       url_image: params.url_image || undefined,
       comment: params.comment || undefined,
-      room_ids: params.room_ids || undefined,
+      rooms: params.rooms || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -71,7 +71,7 @@ const putUpdate = async (id, params) => {
         address: params.address || undefined,
         url_image: params.url_image || undefined,
         comment: params.comment || undefined,
-        room_ids: params.room_ids || undefined,
+        rooms: params.rooms || undefined,
         updated_at: moment.now()
       }
     };

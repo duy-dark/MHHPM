@@ -6,7 +6,7 @@ let schema = new mongoose.Schema(
     address: String,
     url_image: String,
     comment: String,
-    room_ids: [require('mongodb').ObjectID],
+    rooms: [Object],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date

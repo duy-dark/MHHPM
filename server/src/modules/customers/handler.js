@@ -67,6 +67,31 @@ const findById = async (id) => {
   }
 };
 
+const postCreate = async (params) => {
+  try {
+    let lambda = {
+      facebook_id: params.facebook_id || undefined,
+      google_id: params.google_id || undefined,
+      name: params.name || undefined,
+      phone: params.phone || undefined,
+      date_of_birth: params.date_of_birth || undefined,
+      email: params.email || undefined,
+      gender: params.gender || undefined,
+      avatar: params.avatar || undefined,
+      adress: params.adress || undefined,
+      account_type: params.provider || undefined,
+      is_deleted: false,
+      created_at: moment.now(),
+      updated_at: moment.now()
+    };
+    console.log(lambda);
+    let data = await Model.createByLambda(lambda);
+    return resSuccess(data);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
 const putUpdate = async (id, params) => {
   try {
     let lambda = {
@@ -231,6 +256,7 @@ const deleteData = async (id) => {
 module.exports = {
   getList,
   findById,
+  postCreate,
   putUpdate,
   deleteData,
   postLoginFacebook,

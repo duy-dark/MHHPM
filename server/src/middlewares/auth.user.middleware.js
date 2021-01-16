@@ -35,12 +35,14 @@ module.exports = {
         req.headers.authorization ||
         req.session.passport.user.data.token;
       if (token && token.startsWith('Bearer ')) {
+        console.log('hello');
         token = token.slice(7, token.length).trimLeft();
       }
       if (token) {
         let payload = jwt.decode(token);
         req.payload = payload;
         console.log('payload.account: ', payload.account);
+        console.log('req.params.id', req.params.id);
         if (payload.account._id === req.params.id) {
           next();
         } else {

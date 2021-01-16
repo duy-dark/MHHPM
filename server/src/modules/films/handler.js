@@ -59,20 +59,33 @@ const getDetail = async (params) => {
         film_schedules: 1
       }
     };
+    let days = [
+      'chủ nhật',
+      'thứ 2',
+      'thứ 3',
+      'thứ 4',
+      'thứ 5',
+      'thứ 6',
+      'thứ 7'
+    ];
+
     let arr = [];
     let now = moment();
     for (let i = 0; i < 7; i++) {
       arr.push({
         name: days[moment(now).add(i, 'days').day()],
-        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
-        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+        date: moment(now).add(i, 'days').format('DD/MM/YYYY')
+        // dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
       });
     }
-    data.forEach((element) => {
-      element = {...element, listday: arr};
-    });
 
     let data = await Model.getDetail(lambda);
+    // data.forEach((element) => {
+    //   element = {...element, listday: arr};
+    // });
+
+    data = data.map((item) => ({...item, listday: arr}));
+    // let data = await Model.getDetail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};

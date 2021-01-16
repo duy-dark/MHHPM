@@ -3,7 +3,7 @@
   flex-direction: row;
   position: relative;
   width: 100%;
-  height: 790px;
+  height: 890px;
 
   .booking-content {
     width: calc(100% - 440px);
@@ -62,7 +62,8 @@
     width: 440px;
     height: 100%;
     box-shadow: -5px 5px 10px rgba(0,0,0,.3);
-    padding: 20px 40px 0;
+    padding: 20px 40px 20px;
+    background-color: #fff;
 
     .booking-form__input {
       padding: 10px 0;
@@ -256,7 +257,10 @@
     }
 
     label {
-      margin: 0;
+      img {
+        width: 40px;
+        height: auto;
+      }
     }
   }
 }

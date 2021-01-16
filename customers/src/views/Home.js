@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import SliderMovies from '../components/SliderMovies';
 import CardFilm from '../components/CardFilm';
 import Select, { components } from 'react-select';
+import ModalTrailer from '../components/ModalTrailer';
 
 export default function Home(props) {
   let history = useHistory();
@@ -109,6 +110,9 @@ export default function Home(props) {
     }))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const [modalShow, setModalShow] = React.useState(false);
+
   return (
     <>
       <SliderMovies />
@@ -148,6 +152,11 @@ export default function Home(props) {
         <div className="list-film">
           { list.map(movie =>  <CardFilm {...movie} />) }
         </div>
+        <ModalTrailer
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          id="5ff13d58c377292934d208df"
+        />
       </div>
     </>
   )

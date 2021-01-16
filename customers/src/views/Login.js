@@ -1,26 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/login/login.scss";
 import logo from "../assets/images-2.png";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signTest, updateHeaderFooter } from "../redux/users/actions";
+import { signIn, signTest, updateHeaderFooter } from "../redux/users/actions";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 export default function Login(props) {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const user = {
-    name: "Phạm Quang Duy",
-    email: "example@example.com",
-  };
   const login = () => {};
   const responseFacebook = (response) => {
     console.log("response", response);
+    const user = {
+      name: response.name,
+      email: response.email,
+      avatar: response.picture.data.url,
+    };
+    dispatch(signIn(user, history));
   };
 
   const responseGoogle = (response) => {
     console.log(response);
+    const user = {
+      name: response.name,
+      email: response.email,
+      avatar: response.picture.data.url,
+    };
+    dispatch(signIn(user, history));
   };
   useEffect(() => {
     dispatch(
@@ -44,6 +52,7 @@ export default function Login(props) {
               <FacebookLogin
                 appId="409505490301267"
                 callback={responseFacebook}
+                fields="name,email,picture"
                 render={(renderProps) => (
                   <button
                     onClick={renderProps.onClick}
@@ -62,6 +71,7 @@ export default function Login(props) {
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={"single_host_origin"}
+                fetchBasicProfile={true}
                 render={(renderProps) => (
                   <button
                     onClick={renderProps.onClick}

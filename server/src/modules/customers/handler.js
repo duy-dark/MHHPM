@@ -87,9 +87,9 @@ const postCreate = async (params) => {
 
     let customerExisted = await Model.findByLambda({
       conditions: {
-        facebook_id: params.facebook_id
-      } || {
         google_id: params.google_id
+      } || {
+        facebook_id: params.facebook_id
       }
     });
     if (customerExisted && customerExisted.length) {

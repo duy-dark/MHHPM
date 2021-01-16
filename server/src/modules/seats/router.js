@@ -6,6 +6,7 @@ const {omitBy, isNil} = require('lodash');
 router.get('/', (req, res, next) => {
   let conditions = {
     _id: req.query._id,
+    name: req.query.name,
     column: req.query.column,
     rows: req.query.rows,
     status: req.query.status

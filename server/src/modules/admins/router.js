@@ -28,7 +28,7 @@ router.get(
 
 router.get(
   '/getdetail',
-  verifyAdminToken.requireByPermission('read_admin'),
+  // verifyAdminToken.requireByPermission('read_admin'),
   (req, res, next) => {
     let conditions = {
       _id: req.query._id,

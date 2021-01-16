@@ -40,6 +40,7 @@ router.get('/', (req, res, next) => {
   let conditions = {
     _id: req.query._id,
     name: req.query.name,
+    trailer: req.query.trailer,
     content: req.query.content,
     countries: req.query.countries,
     long_time: req.query.long_time,

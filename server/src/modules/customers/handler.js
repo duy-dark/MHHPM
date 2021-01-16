@@ -86,7 +86,7 @@ const postCreate = async (params) => {
       }
     }
     if (params.google_id) {
-      customerExisted = await Model.findByLambda({
+      let customerExisted = await Model.findByLambda({
         conditions: {
           google_id: params.google_id
         }
@@ -118,7 +118,7 @@ const postCreate = async (params) => {
     let data = await Model.createByLambda(lambda);
     // return resSuccess(data);
     return resSuccess({
-      token: jwt.encode(data),
+      token: jwt.encode(data[0]),
       customer: data[0]
     });
   } catch (error) {

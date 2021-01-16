@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/home.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo, updateHeaderFooter } from "../redux/users/actions";
+import { getListFilm } from "../redux/films/actions";
 import { useHistory } from "react-router-dom";
 import SliderMovies from "../components/SliderMovies";
 import CardFilm from "../components/CardFilm";
@@ -16,6 +17,16 @@ export default function Home(props) {
   const [selectDate, setSelectDate] = useState();
   const [selectTime, setSelectTime] = useState();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getListFilm())
+    dispatch(updateHeaderFooter({
+      header: true,
+      footer: true
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
   const optionsFilm = [
     { value: 1, label: "Nữ Thần Chiến Binh 1984 - Wonder Woman 1984 (C13)" },
     {

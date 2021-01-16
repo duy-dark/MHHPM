@@ -29,6 +29,28 @@
       max-width: 870px;
     }
 
+    .detail-slider__image {
+      position: relative;
+
+      .detail-slider__image__play {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+      }
+
+      &:hover {
+        .detail-slider__image__play {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+
     .detail-slider__content {
       padding: 10px;
       display: flex;

@@ -4,6 +4,10 @@ import { updateHeaderFooter } from "../redux/users/actions";
 import '../styles/booking.scss';
 import screen from "../assets/screen.png";
 import icBHD from '../assets/ic_bhd.png';
+import icZalopay from '../assets/ic-zalopay.png';
+import icMomo from '../assets/logo-momo.jpg';
+import icVisa from '../assets/ic-visa.png';
+import icND from '../assets/ic-noidia.png';
 import { useLocation, useHistory } from 'react-router-dom';
 
 const SeatEl = (props) => {
@@ -53,6 +57,7 @@ export default function Booking(props) {
   const [seats, setSeats] = useState([]);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [payment, setPayment] = useState('');
   const listSeat = [
     {
       name: 'A',
@@ -96,7 +101,7 @@ export default function Booking(props) {
     }
   ]
 
-  const disabledBtn = !(seats.length > 0 && email && phone)
+  const disabledBtn = !(seats.length > 0 && email && phone && payment)
 
   const selectSeat = (seat) => {
     if (seats.length <= 10) {
@@ -190,16 +195,29 @@ export default function Booking(props) {
           <p>Hình thức thanh toán</p>
           <div className="group-radio">
             <div className="radio-form">
-              <input id="visa" name="payment" type="radio" />
-              <label htmlFor="visa">Thanh Toán Visa</label>
+              <input id="momo" name="payment" value="momo" onChange={e => setPayment(e.target.value)}type="radio" />
+              <label htmlFor="momo">
+                <img src={icMomo} alt=""/> <span>Thanh toán Momo</span>
+              </label>
             </div>
             <div className="radio-form">
-              <input id="noidia" name="payment" type="radio" />
-              <label htmlFor="noidia">Thanh Toán Nội Địa</label>
+              <input id="zalopay" name="payment" value="zalopay" onChange={e => setPayment(e.target.value)}type="radio" />
+              <label htmlFor="zalopay">
+                <img src={icZalopay} alt=""/> <span>Thanh toán Zalopay</span>
+              </label>
             </div>
             <div className="radio-form">
-              <input id="online" name="payment" type="radio" />
-              <label htmlFor="online">Thanh Toán Online</label>
+              <div className="">
+                <input id="noidia" name="payment" value="noi dia" onChange={e => setPayment(e.target.value)}type="radio" />
+                <label htmlFor="noidia">
+                  <img src={icND} alt=""/><span>Thanh Toán Nội Địa</span>
+                </label>
+              </div>
+            </div>
+            <div className="radio-form">
+              <input id="visa" name="payment" value="visa" onChange={e => setPayment(e.target.value)}type="radio" />
+              <label htmlFor="visa">
+                <img src={icVisa} alt=""/> <span>Thanh Toán Visa, Jcb, master card</span></label>
             </div>
           </div>
         </div>

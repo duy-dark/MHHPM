@@ -55,7 +55,8 @@ const getDetail = async (params) => {
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
-        categories: 1
+        categories: 1,
+        film_schedules: 1
       }
     };
     let data = await Model.getDetail(lambda);
@@ -86,7 +87,8 @@ const findById = async (id) => {
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
-        categories: 1
+        categories: 1,
+        film_schedules: 1
       }
     };
     let data = await Model.getDetail(lambda);

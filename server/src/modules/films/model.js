@@ -54,6 +54,29 @@ module.exports = {
       {$match: lambda.conditions},
       {
         $lookup: {
+          from: 'film_schedules',
+          localField: '_id',
+          foreignField: 'film_id',
+          as: 'film_schedules'
+        }
+      },
+      {
+        $addFields: {
+          film_schedules: {
+            $map: {
+              input: '$film_schedules',
+              in: {
+                time_start: '$$this.time_start',
+                time_end: '$$this.time_end',
+                theater_id: '$$this.theater_id',
+                room: '$$this.room'
+              }
+            }
+          }
+        }
+      },
+      {
+        $lookup: {
           from: 'categories',
           localField: 'category_ids',
           foreignField: '_id',

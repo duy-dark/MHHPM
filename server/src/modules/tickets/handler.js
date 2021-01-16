@@ -49,14 +49,10 @@ const findById = async (id) => {
       }
     };
     let data = await Model.getDetail(lambda);
-    console.log(
-      'data[0].film_schedules.theater:',
-      data[0].film_schedules[0].theater
-    );
+
     let theater = await require('../theaters/model').findByLambda({
       conditions: {_id: data[0].film_schedules[0].theater}
     });
-    console.log('theater:', theater);
     data[0].film_schedules[0].theater = theater[0].name;
 
     return resSuccess(data[0]);
@@ -83,7 +79,6 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    // console.log('lambda:', lambda);
 
     let data = await Model.createByLambda(lambda);
 
@@ -104,26 +99,16 @@ const postCreate = async (params) => {
         customers: 1
       }
     };
-    // console.log('view', view);
     let ticketView = await Model.getDetail(view);
     let theater = await require('../theaters/model').findByLambda({
       conditions: {_id: ticketView[0].film_schedules[0].theater}
     });
-    // console.log('theater:', theater);
     ticketView[0].film_schedules[0].theater = theater[0].name;
 
     let seats = ticketView[0].seat_ids.toString();
-    console.log('seats:', seats);
 
     let timeStart = moment(ticketView[0].film_schedules[0].time_start).format(
       'DD/MM/YYYY, HH:mm'
-    );
-
-    console.log(
-      'timeStart:',
-      moment(ticketView[0].film_schedules[0].time_start).format(
-        'DD/MM/YYYY, HH:mm'
-      )
     );
 
     let time_end = moment(ticketView[0].film_schedules[0].time_end).format(
@@ -131,6 +116,7 @@ const postCreate = async (params) => {
     );
 
     const objEmail = {
+      id: ticketView[0]._id,
       seats: seats,
       count: ticketView[0].count,
       cost: ticketView[0].cost,
@@ -143,7 +129,6 @@ const postCreate = async (params) => {
       room: ticketView[0].film_schedules[0].room
     };
 
-    console.log('objEmail:', objEmail);
     let mainOptions = {
       // thiết lập đối tượng, nội dung gửi mail
       from: 'example@example.com',
@@ -151,14 +136,16 @@ const postCreate = async (params) => {
       subject: 'Đặt vé thành công',
       html: contentMail(objEmail) //Nội dung html mình đã tạo trên kia :))
     };
-    await transporter.sendMail(mainOptions, (err, info) => {
+    let p1 = await transporter.sendMail(mainOptions);
+    await Promise.all([p1]).then(row => {
+      let { err, info } = row[0]
       if (err) {
         throw {
           status: 203,
           detail: 'send mail error'
-        };
+        }
       }
-    });
+    })
 
     return resSuccess(data[0]);
   } catch (error) {

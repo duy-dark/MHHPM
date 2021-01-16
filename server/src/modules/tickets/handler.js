@@ -3,6 +3,7 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {transporter, contentMail, contentCode} = require('../../util/mail');
+const {nexmo} = require('../../util/sms');
 
 const getList = async (params) => {
   try {
@@ -165,7 +166,12 @@ const postCreate = async (params) => {
     throw {status: 400, detail: error};
   }
 };
-
+const sendSMS = (objectSms) => {
+  const from = 'Vonage APIs';
+  const to = '84838263357';
+  const text = 'Hello from Vonage SMS API';
+  nexmo.message.sendSms(from, to, text);
+};
 const putUpdate = async (id, params) => {
   try {
     let lambda = {

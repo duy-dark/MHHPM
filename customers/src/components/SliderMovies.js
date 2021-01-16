@@ -63,19 +63,19 @@ export default class SliderMovies extends Component {
         <Slider className="slider" ref={slider => (this.slider = slider)} {...settings}>
           <div className="slider__list">
             <img className="slider__image" src={"/assets/slider/slider1.png"}  alt=""/>
-            <img className="play" src={ImagePlay} alt=""/>
+            <img className="play" onClick={() => this.props.clickTrailer('5ff1460f63ccaf2a14e45104')} src={ImagePlay} alt=""/>
           </div>
           <div className="slider__list">
             <img className="slider__image" src={"/assets/slider/slider2.png"}  alt=""/>
-            <img className="play" src={ImagePlay} alt=""/>
+            <img className="play" onClick={() => this.props.clickTrailer('')} src={ImagePlay} alt=""/>
           </div>
           <div className="slider__list">
             <img className="slider__image" src={"/assets/slider/slider3.png"}  alt=""/>
-            <img className="play" src={ImagePlay} alt=""/>
+            <img className="play" onClick={() => this.props.clickTrailer('5ff13d58c377292934d208df')} src={ImagePlay} alt=""/>
           </div>
           <div className="slider__list">
             <img className="slider__image" src={"/assets/slider/slider4.png"}  alt=""/>
-            <img className="play" src={ImagePlay} alt=""/>
+            <img className="play" onClick={() => this.props.clickTrailer('')} src={ImagePlay} alt=""/>
           </div>
         </Slider>
       </div>

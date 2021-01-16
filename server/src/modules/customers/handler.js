@@ -114,8 +114,6 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-<<<<<<< HEAD
-=======
 
     let customerExisted = await Model.findByLambda({
       conditions: {
@@ -131,7 +129,6 @@ const postCreate = async (params) => {
       });
     }
 
->>>>>>> bf0d0770c13636fe60b7eee706885c7230bc8a68
     console.log(lambda);
     let data = await Model.createByLambda(lambda);
     // return resSuccess(data);

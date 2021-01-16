@@ -75,8 +75,8 @@ const getDetail = async (params) => {
       arr.push({
         name: days[moment(now).add(i, 'days').day()],
         date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
-        day: moment(now).add(i, 'days').format('DD')
-        // dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+        day: moment(now).add(i, 'days').format('DD'),
+        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
       });
     }
 
@@ -143,6 +143,7 @@ const findById = async (id) => {
       arr.push({
         name: days[moment(now).add(i, 'days').day()],
         date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+        day: moment(now).add(i, 'days').format('DD'),
         dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
       });
     }

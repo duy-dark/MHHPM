@@ -6,19 +6,46 @@ const nexmo = new Nexmo({
 });
 const sendSMS = (objectSms) => {
   const from = 'Vonage APIs';
-  const to = '84838263357';
-  const text = `Đặt vé thành công`;
-  // Mã: ${objectSms.id}
-  // Số ghế:${objectSms.count}
-  // Ghế:${objectSms.seats}
-  // Giá:${objectSms.cost}
-  // Tên khách hàng:${objectSms.customers}
-  // Số điện thoại:${objectSms.phone_number}
-  // Loại thanh toán:${objectSms.payment}
-  // Thời gian bắt đầu:${objectSms.time_start}
-  // Thời gian hết phim:${objectSms.time_end}
-  // Tên rạp:${objectSms.theater}
-  // Tên phòng:${objectSms.room}
-  nexmo.message.sendSms(from, to, text);
+  const to = '+84838263357';
+  const text = `Dat ve thanh cong
+  Ma: ${objectSms.id}
+  So ghe:${objectSms.count}
+  Ghe:${objectSms.seats}
+  Gia:${objectSms.cost}
+  Ten:${objectSms.customers}
+  SDT:${objectSms.phone_number}
+  Thanh toan:${objectSms.payment}
+  Bat dau:${objectSms.time_start}
+  Het:${objectSms.time_end}
+  Rap:${objectSms.theater}
+  Phong:${objectSms.room}`;
+  return nexmo.message.sendSms(from, to, text);
 };
 module.exports = {nexmo, sendSMS};
+
+// const Vonage = require('@vonage/server-sdk');
+
+// const vonage = new Vonage({
+//   apiKey: '023dea62',
+//   apiSecret: 'w4eXN8dbIu96kaAT'
+// });
+// // const sendSms = (objSms) => {
+// const from = 'WMH';
+// const to = '+84838263357';
+// const text = 'ok sms';
+
+// vonage.message.sendSms(from, to, text, (err, responseData) => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     if (responseData.messages[0]['status'] === '0') {
+//       console.log('Message sent successfully.');
+//     } else {
+//       console.log(
+//         `Message failed with error: ${responseData.messages[0]['error-text']}`
+//       );
+//     }
+//   }
+// });
+// // };
+// // module.exports = {sendSms};

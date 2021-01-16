@@ -5,7 +5,7 @@ import usersReducer from './users/reducer';
 import usersTypes from './users/types';
 
 import filmsReducer from './films/reducer';
-import filmsTypes from './users/types';
+import filmsTypes from './films/types';
 
 const rootReducer = combineReducers({
   users: filterActions(usersReducer, Object.values(usersTypes)),

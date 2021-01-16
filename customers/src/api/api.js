@@ -2,7 +2,8 @@ import axios from "axios";
 import interceptors from "./interceptors";
 
 const Api = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  // baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: 'http://localhost:1000',
   withCredentials: false,
   headers: {
     Accept: 'application/json',

@@ -11,3 +11,10 @@ export function postBookingInfo(bookingInfo, history) {
     history: history,
   };
 }
+
+export function getFilmDetails(info) {
+  return {
+    type: FilmTypes.FILM_DETAIL,
+    payload: info
+  }
+}

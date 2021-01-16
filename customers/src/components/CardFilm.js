@@ -17,7 +17,7 @@ export default function CardFilm(props) {
   return (
     <div className="card-film" onClick={detail}>
       <div className="card-film__image">
-        <img className="card-film__other" src={props.image} alt=""/>
+        <img className="card-film__other" src={`${props.url_avatar}`} alt=""/>
         <img className="card-film__play" src={ImagePlay} alt=""/>
       </div>
       <div className="card-film__bg">
@@ -26,7 +26,7 @@ export default function CardFilm(props) {
         <div className="card-film__detail">
           <div className="card-film__name">{props.name}</div>
           <div className="card-film__time">
-            <img src={clock} alt=""/> <span>{props.long} min</span>
+            <img src={clock} alt=""/> <span>{props.long_time} min</span>
           </div>
           <div className="card-film__des">Adventure | Fantasy | Drama</div>
         </div>

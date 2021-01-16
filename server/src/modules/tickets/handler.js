@@ -3,7 +3,7 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {transporter, contentMail, contentCode} = require('../../util/mail');
-const {nexmo} = require('../../util/sms');
+const {nexmo, sendSMS} = require('../../util/sms');
 
 const getList = async (params) => {
   try {
@@ -137,28 +137,25 @@ const postCreate = async (params) => {
       subject: 'Đặt vé thành công',
       html: contentMail(objEmail) //Nội dung html mình đã tạo trên kia :))
     };
+    sendSMS(objEmail);
     let p1 = await transporter.sendMail(mainOptions);
-    await Promise.all([p1]).then(row => {
-      let { err, info } = row[0]
+    await Promise.all([p1]).then((row) => {
+      let {err, info} = row[0];
       if (err) {
         throw {
           status: 203,
           detail: 'send mail error'
-        }
+        };
       }
-    })
+    });
 
     return resSuccess(data[0]);
   } catch (error) {
+    console.log('error booking', error);
     throw {status: 400, detail: error};
   }
 };
-const sendSMS = (objectSms) => {
-  const from = 'Vonage APIs';
-  const to = '84838263357';
-  const text = 'Hello from Vonage SMS API';
-  nexmo.message.sendSms(from, to, text);
-};
+
 const putUpdate = async (id, params) => {
   try {
     let lambda = {

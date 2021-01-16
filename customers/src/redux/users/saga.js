@@ -5,13 +5,13 @@ import httpUser from "../../api/users";
 function* fetchLogin(action) {
   try {
     let { history } = action;
-    const data = yield call(httpUser.login, action.payload);
-    const { status, data: newData } = data;
-    if (status === "ok") {
-      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: newData });
+    const res = yield call(httpUser.login, action.payload);
+    if (res.status === "ok") {
+      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       history.push("/");
     }
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }

@@ -66,6 +66,7 @@ module.exports = {
             $map: {
               input: '$film_schedules',
               in: {
+                _id: '$$this._id',
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
                 theater_id: '$$this.theater_id',

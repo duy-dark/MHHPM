@@ -1,1 +1,4 @@
 [1229/013105.280:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[0116/092358.041:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[0116/092358.064:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Hoang Luu\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\cd64cfd7-2ad4-4932-aba3-17f12fc69e14: The system cannot find the path specified. (0x3)
+[0116/092358.067:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Hoang Luu\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\a29349c6-e69d-4336-bc5f-85084b4c3932: The system cannot find the path specified. (0x3)

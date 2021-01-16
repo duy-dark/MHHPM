@@ -64,7 +64,7 @@ const postCreate = async (params) => {
       film_schedule_id:
         require('mongodb').ObjectId(params.film_schedule_id) || undefined,
       voucher_id: require('mongodb').ObjectId(params.voucher_id) || undefined,
-      seat_ids: require('mongodb').ObjectId(params.seat_ids) || undefined,
+      seat_ids: params.seat_ids || undefined,
       email: params.email || undefined,
       phone_number: params.phone_number || undefined,
       payment: params.payment || undefined,
@@ -110,7 +110,7 @@ const putUpdate = async (id, params) => {
         film_schedule_id:
           require('mongodb').ObjectId(params.film_schedule_id) || undefined,
         voucher_id: require('mongodb').ObjectId(params.voucher_id) || undefined,
-        seat_ids: require('mongodb').ObjectId(params.seat_ids) || undefined,
+        seat_ids: params.seat_ids || undefined,
         email: params.email || undefined,
         phone_number: params.phone_number || undefined,
         payment: params.payment || undefined,

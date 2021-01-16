@@ -7,6 +7,13 @@ function* fetchPostBookingInfo(action) {
     const res = yield call(httpFilms.postBookingInfo, action.payload);
     if (res.status === "ok") {
       yield put({ type: FilmsType.POST_BOOKING_INFO, payload: res.data });
+      action.history.push({
+        pathname: "/complete",
+        state: {
+          email: action.payload.email,
+          phone_number: action.payload.phone_number,
+        },
+      });
     }
   } catch (error) {
     console.log("fetchPostBookingInfo Error", error);

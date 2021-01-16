@@ -56,8 +56,8 @@ router.get('/auth/logout', function (req, res) {
   res.redirect('https://www.google.com/');
 });
 
-router.get('/', verifyUser.requireByUser, (req, res, next) => {
-  console.log('req.session.passport111:', req.session.passport.user.data);
+router.get('/', (req, res, next) => {
+  // console.log('req.session.passport111:', req.session.passport.user.data);
   // console.log(
   //   'passport.Authenticator.prototype.deserializeUser.arguments[0]:',
   //   passport.Authenticator.prototype.deserializeUser.arguments[0].data[0]._id

@@ -69,6 +69,36 @@ const findById = async (id) => {
 
 const postCreate = async (params) => {
   try {
+    if (params.facebook_id) {
+      console.log('params.facebook_id:', params.facebook_id);
+      let customerExisted = await Model.findByLambda({
+        conditions: {
+          facebook_id: params.facebook_id
+        }
+      });
+      console.log('customer:', customerExisted);
+
+      if (customerExisted && customerExisted.length) {
+        return resSuccess({
+          token: jwt.encode(customerExisted[0]),
+          customer: customerExisted[0]
+        });
+      }
+    }
+    if (params.google_id) {
+      customerExisted = await Model.findByLambda({
+        conditions: {
+          google_id: params.google_id
+        }
+      });
+      if (customerExisted && customerExisted.length) {
+        return resSuccess({
+          token: jwt.encode(customerExisted[0]),
+          customer: customerExisted[0]
+        });
+      }
+    }
+
     let lambda = {
       facebook_id: params.facebook_id || undefined,
       google_id: params.google_id || undefined,
@@ -84,21 +114,6 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-
-    let customerExisted = await Model.findByLambda({
-      conditions: {
-        facebook_id: params.facebook_id
-      } || {
-        google_id: params.google_id
-      }
-    });
-    if (customerExisted && customerExisted.length) {
-      return resSuccess({
-        token: jwt.encode(customerExisted[0]),
-        customer: customerExisted[0]
-      });
-    }
-
     console.log(lambda);
     let data = await Model.createByLambda(lambda);
     // return resSuccess(data);

@@ -59,6 +59,12 @@ const getDetail = async (params) => {
         film_schedules: 1
       }
     };
+    // let now = moment.now();
+    // let arrayDay = [];
+    // for (let i = 1; i < 7; i++) {
+    //   let day = now
+    // }
+
     let data = await Model.getDetail(lambda);
     return resSuccess(data);
   } catch (error) {
@@ -92,6 +98,38 @@ const findById = async (id) => {
       }
     };
     let data = await Model.getDetail(lambda);
+    // let now = moment.now();
+
+    // let arrayDay = [];
+    // arrayDay.push(now);
+    // for (let i = 1; i < 7; i++) {
+    //   let day = moment(now, 'DD-MM-YYYY').add(i, 'days');
+    //   arrayDay.push(day);
+    // }
+
+    let days = [
+      'chủ nhật',
+      'thứ 2',
+      'thứ 3',
+      'thứ 4',
+      'thứ 5',
+      'thứ 6',
+      'thứ 7'
+    ];
+    let arr = [];
+    let now = moment();
+    for (let i = 0; i < 7; i++) {
+      arr.push({
+        name: days[moment(now).add(i, 'days').day()],
+        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+      });
+    }
+
+    console.log('arr:', arr);
+    // let data = await Model.getDetail(lambda);
+    data[0] = {...data, lisday: arr};
+
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};

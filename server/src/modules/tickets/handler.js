@@ -39,15 +39,26 @@ const findById = async (id) => {
         booking_time: 1,
         cost: 1,
         customer_id: 1,
-        film_schedule_id: 1,
-        voucher_id: 1,
         seat_ids: 1,
         email: 1,
+        voucher_id: 1,
         phone_number: 1,
-        payment: 1
+        payment: 1,
+        film_schedules: 1,
+        customers: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetail(lambda);
+    console.log(
+      'data[0].film_schedules.theater:',
+      data[0].film_schedules[0].theater
+    );
+    let theater = await require('../theaters/model').findByLambda({
+      conditions: {_id: data[0].film_schedules[0].theater}
+    });
+    console.log('theater:', theater);
+    data[0].film_schedules[0].theater = theater[0].name;
+
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -72,16 +83,73 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    console.log('lambda:', lambda);
+    // console.log('lambda:', lambda);
 
     let data = await Model.createByLambda(lambda);
 
+    let view = {
+      conditions: {_id: data[0]._id, is_deleted: false},
+      views: {
+        _id: 1,
+        count: 1,
+        booking_time: 1,
+        cost: 1,
+        customer_id: 1,
+        seat_ids: 1,
+        email: 1,
+        voucher_id: 1,
+        phone_number: 1,
+        payment: 1,
+        film_schedules: 1,
+        customers: 1
+      }
+    };
+    // console.log('view', view);
+    let ticketView = await Model.getDetail(view);
+    let theater = await require('../theaters/model').findByLambda({
+      conditions: {_id: ticketView[0].film_schedules[0].theater}
+    });
+    // console.log('theater:', theater);
+    ticketView[0].film_schedules[0].theater = theater[0].name;
+
+    let seats = ticketView[0].seat_ids.toString();
+    console.log('seats:', seats);
+
+    let timeStart = moment(ticketView[0].film_schedules[0].time_start).format(
+      'DD/MM/YYYY, HH:mm'
+    );
+
+    console.log(
+      'timeStart:',
+      moment(ticketView[0].film_schedules[0].time_start).format(
+        'DD/MM/YYYY, HH:mm'
+      )
+    );
+
+    let time_end = moment(ticketView[0].film_schedules[0].time_end).format(
+      'DD/MM/YYYY, HH:mm'
+    );
+
+    const objEmail = {
+      seats: seats,
+      count: ticketView[0].count,
+      cost: ticketView[0].cost,
+      customers: ticketView[0].customers[0].name,
+      phone_number: ticketView[0].phone_number,
+      payment: ticketView[0].payment,
+      time_start: timeStart,
+      time_end: time_end,
+      theater: ticketView[0].film_schedules[0].theater,
+      room: ticketView[0].film_schedules[0].room
+    };
+
+    console.log('objEmail:', objEmail);
     let mainOptions = {
       // thiết lập đối tượng, nội dung gửi mail
       from: 'example@example.com',
       to: params.email,
       subject: 'Đặt vé thành công',
-      html: contentMail(data[0]) //Nội dung html mình đã tạo trên kia :))
+      html: contentMail(objEmail) //Nội dung html mình đã tạo trên kia :))
     };
     await transporter.sendMail(mainOptions, (err, info) => {
       if (err) {

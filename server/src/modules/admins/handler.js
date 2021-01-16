@@ -81,7 +81,7 @@ const findById = async (id) => {
         status: 204,
         detail: 'Admin not found'
       };
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -115,7 +115,7 @@ const postCreate = async (params) => {
     };
     console.log(lambda);
     let data = await Model.createByLambda(lambda);
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }

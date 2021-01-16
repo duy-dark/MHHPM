@@ -74,23 +74,24 @@ const postCreate = async (params) => {
     };
     console.log('lambda:', lambda);
 
-    let mainOptions = {
-      // thiết lập đối tượng, nội dung gửi mail
-      from: 'example@example.com',
-      to: params.email,
-      subject: 'Đặt vé thành công',
-      html: contentMail(user.insertId) //Nội dung html mình đã tạo trên kia :))
-    };
-    await transporter.sendMail(mainOptions, (err, info) => {
-      if (err) {
-        throw {
-          status: 203,
-          detail: 'send mail error'
-        };
-      }
-    });
-
     let data = await Model.createByLambda(lambda);
+
+    // let mainOptions = {
+    //   // thiết lập đối tượng, nội dung gửi mail
+    //   from: 'example@example.com',
+    //   to: params.email,
+    //   subject: 'Đặt vé thành công',
+    //   html: contentMail(user.insertId) //Nội dung html mình đã tạo trên kia :))
+    // };
+    // await transporter.sendMail(mainOptions, (err, info) => {
+    //   if (err) {
+    //     throw {
+    //       status: 203,
+    //       detail: 'send mail error'
+    //     };
+    //   }
+    // });
+
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};

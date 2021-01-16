@@ -114,21 +114,6 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-
-    let customerExisted = await Model.findByLambda({
-      conditions: {
-        google_id: params.google_id
-      } || {
-        facebook_id: params.facebook_id
-      }
-    });
-    if (customerExisted && customerExisted.length) {
-      return resSuccess({
-        token: jwt.encode(customerExisted[0]),
-        customer: customerExisted[0]
-      });
-    }
-
     console.log(lambda);
     let data = await Model.createByLambda(lambda);
     // return resSuccess(data);

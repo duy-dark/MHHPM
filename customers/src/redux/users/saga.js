@@ -28,12 +28,12 @@ function* fetchListFriend() {
   }
 }
 
-function* fetchUserInfo() {
+function* fetchUserInfo(action) {
   try {
-    const data = yield call(httpUser.getUserInfo, {});
-    const { status, data: newData } = data;
-    if (status === "ok") {
-      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: newData });
+    const res = yield call(httpUser.getUserInfo, action.payload);
+
+    if (res.status === "ok") {
+      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: res.data });
     }
   } catch (err) {
     throw err;

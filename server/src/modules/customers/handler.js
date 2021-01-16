@@ -119,7 +119,7 @@ const postCreate = async (params) => {
     // return resSuccess(data);
     return resSuccess({
       token: jwt.encode(data),
-      customer: data
+      customer: data[0]
     });
   } catch (error) {
     throw {status: 400, detail: error};

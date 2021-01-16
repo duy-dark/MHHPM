@@ -55,7 +55,7 @@ export default function SliderMovies(props) {
             return (
               <div key={item._id} className="slider__list">
                 <img className="slider__image" src={`${item.url_background}`}  alt=""/>
-                <img className="play" onClick={() => this.props.clickTrailer(item._id)} src={ImagePlay} alt=""/>
+                <img className="play" onClick={() => props.clickTrailer(item._id)} name={item._id} src={ImagePlay} alt=""/>
               </div>
             )
           })

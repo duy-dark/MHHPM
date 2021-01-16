@@ -13,7 +13,7 @@ export default function FilmDetail(props) {
   // let history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const theaters = useSelector(state => state.films.theaters);
   const [detail, setDetail] = useState(location.state)
   const scheduleTime = theaters.map(threater => {
@@ -46,6 +46,11 @@ export default function FilmDetail(props) {
     filmDetail: detail,
     filmSchedule: scheduleTime
   }
+  const [modalId, setModalId] = React.useState("");
+  const showTrailerSlider = (id) => {
+    setModalId(id);
+    setModalShow(true);
+  };
   return (
     <div className="detail">
       <div className="detail-slider">
@@ -56,7 +61,7 @@ export default function FilmDetail(props) {
         <div className="detail-slider__wrapper">
           <div className="detail-slider__image">
             <img className="detail-slider__image__movie" src={detail.url_avatar} alt=""/>
-            <img className="detail-slider__image__play" src={ImagePlay} alt=""/>
+            <img className="detail-slider__image__play" onClick={() => showTrailerSlider(detail._id)} src={ImagePlay} alt=""/>
           </div>
           <div className="detail-slider__content">
             <div className="detail-slider__date">{moment(detail.start_date).format('DD-MM-YYYY')}</div>
@@ -71,7 +76,7 @@ export default function FilmDetail(props) {
       <ModalTrailer
         show={modalShow}
         onHide={() => setModalShow(false)}
-        id="5ff13d58c377292934d208df"
+        id={modalId}
       />
     </div>
   )

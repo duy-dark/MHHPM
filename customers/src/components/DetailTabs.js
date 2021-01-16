@@ -68,7 +68,6 @@ const TabsDate = (props) => {
 }
 
 export default function DetailTabs(props) {
-  console.log(props)
   return (
     <Tabs className="detail-content">
       <TabList className="detail-tab-list">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useStore, useDispatch, useSelector } from "react-redux";
 import { updateHeaderFooter } from "../redux/users/actions";
 import "../styles/booking.scss";
 import screen from "../assets/screen.png";
@@ -10,6 +10,7 @@ import icVisa from "../assets/ic-visa.png";
 import icND from "../assets/ic-noidia.png";
 import { useLocation, useHistory } from "react-router-dom";
 import { postBookingInfo } from "../redux/films/actions";
+import { getToken } from '../redux/users/selector';
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -56,6 +57,11 @@ const RowSeatEl = (props) => {
     </div>
   );
 };
+
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 export default function Booking(props) {
   let location = useLocation();
@@ -259,11 +265,12 @@ export default function Booking(props) {
       ],
     },
   ];
+  const { users } = useStore().getState();
 
   const [disabledBtn, setDisabledBtn] = useState(false);
 
   useEffect(() => {
-    setDisabledBtn(!(seats.length > 0 && email && phone && payment))
+    setDisabledBtn(!(seats.length > 0 && validateEmail(email) && phone && payment))
   }, [seats, email, phone, payment])
   const selectSeat = (seat) => {
     if (seats.length <= 10) {
@@ -304,6 +311,11 @@ export default function Booking(props) {
         footer: true,
       })
     );
+
+    let token = getToken(users);
+    if (!token) {
+      history.push('/login');
+    } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -378,6 +390,7 @@ export default function Booking(props) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <div></div>
         </div>
 
         <div className="booking-form__input booking-form__phone">

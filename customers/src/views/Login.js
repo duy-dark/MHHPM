@@ -12,7 +12,6 @@ export default function Login(props) {
 
   const login = () => {};
   const responseFacebook = (response) => {
-    console.log("response", response);
     const user = {
       facebook_id: response.id,
       name: response.name,
@@ -24,7 +23,6 @@ export default function Login(props) {
   };
 
   const responseGoogle = (response) => {
-    console.log(response);
     const user = {
       google_id: response.googleId,
       name: response.profileObj.name,

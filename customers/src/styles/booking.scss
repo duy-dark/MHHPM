@@ -161,6 +161,7 @@
       }
       &.booking-form-btn--disabled {
         background-color: #BDBDBD;
+        pointer-events: none;
       }
     }
   }

@@ -260,8 +260,11 @@ export default function Booking(props) {
     },
   ];
 
-  const disabledBtn = !(seats.length > 0 && email && phone && payment);
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
+  useEffect(() => {
+    setDisabledBtn(!(seats.length > 0 && email && phone && payment))
+  }, [seats, email, phone, payment])
   const selectSeat = (seat) => {
     if (seats.length <= 10) {
       if (seats.includes(seat)) {
@@ -280,32 +283,18 @@ export default function Booking(props) {
   };
 
   const bookingTicket = () => {
-    // const [movies, setMovies] = useState(location.state);
-    // const [seats, setSeats] = useState([]);
-    // const [email, setEmail] = useState('');
-    // const [phone, setPhone] = useState('');
-    // const [payment, setPayment] = useState('');
-
-    // const bookingInfo = {
-    //   count: seats.length,
-    //   customer_id: user.id,
-    //   film_schedule_id: movies.scheduleId,
-    //   seat_ids: seats,
-    //   email: email,
-    //   phone_number: phone,
-    //   payment: payment,
-    // };
     const bookingInfo = {
       count: seats.length,
-      customer_id: "5ffadbab529bd58b18ed2fe6",
-      film_schedule_id: "5ffadbab529bd58b18ed2fe6",
+      cost: seats.length * 80000,
+      customer_id: user._id,
+      film_schedule_id: movies.scheduleId,
       seat_ids: seats,
       email: email,
       phone_number: phone,
       payment: payment,
     };
-    console.log("Sua customer_id");
     dispatch(postBookingInfo(bookingInfo, history));
+    setDisabledBtn(true);
   };
 
   useEffect(() => {
@@ -375,7 +364,7 @@ export default function Booking(props) {
           Ghế{" "}
           {seats.map((seat, index) => {
             return (
-              <span>
+              <span key={index}>
                 {index > 0 ? ", " : ""}
                 {seat}
               </span>

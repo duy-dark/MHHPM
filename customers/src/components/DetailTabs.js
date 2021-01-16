@@ -15,18 +15,19 @@ const TimeFilm = (props) => {
         address: props.address,
         room: props.room,
         name: props.nameMovie,
-        timeStart: props.timeStart,
+        timeStart: moment(props.time_start).format('hh:mm'),
         date: props.date,
         day: props.name,
-        typeThreater: props.threater
+        typeThreater: props.threater,
+        scheduleId: props._id
       }
     })
   }
   return (
     <div className="time-film" onClick={bookingSeat}>
-      <span>{props.timeStart}</span>
+      <span>{ moment(props.time_start).format('hh:mm')}</span>
       <span>~</span>
-      <span>{props.timeEnd}</span>
+      <span>{ moment(props.time_end).format('hh:mm') }</span>
     </div>
   )
 }
@@ -51,7 +52,7 @@ const TabsDate = (props) => {
       <TabList className="date-list">
         { props.listDate.map((item, index) => {
           return (
-            <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{moment(item.date).format('DD')}</span></Tab>
+            <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{item.day}</span></Tab>
           )
         })}
       </TabList>
@@ -67,324 +68,7 @@ const TabsDate = (props) => {
 }
 
 export default function DetailTabs(props) {
-
-  const filmSchedule = [
-    {
-      id: 1,
-      image: '/assets/threater1.jpg',
-      name: 'BHD Star - Vincom 3/2',
-      address: 'L5-Vincom 3/2, 3C Đường 3/2, Q.10',
-      listDate: [
-        {
-          name: 'Thứ 2',
-          date: '2021/01/04'
-        },
-        {
-          name: 'Thứ 3',
-          date: '2021/01/05'
-        },
-        {
-          name: 'Thứ 4',
-          date: '2021/01/06'
-        },
-        {
-          name: 'Thứ 5',
-          date: '2021/01/07'
-        },
-        {
-          name: 'Thứ 6',
-          date: '2021/01/08'
-        },
-        {
-          name: 'Thứ 7',
-          date: '2021/01/09'
-        },
-        {
-          name: 'Chủ nhật',
-          date: '2021/01/10'
-        }
-      ],
-      listTime: [
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ]
-      ]
-    },
-    {
-      id: 2,
-      image: '/assets/threater2.jpg',
-      name: 'BHD Star - Bitexco',
-      address: 'L3-Bitexco Icon 68, 2 Hải Triều, Q.1',
-      listDate: [
-        {
-          name: 'Thứ 2',
-          date: '2021/01/04'
-        },
-        {
-          name: 'Thứ 3',
-          date: '2021/01/05'
-        },
-        {
-          name: 'Thứ 4',
-          date: '2021/01/06'
-        },
-        {
-          name: 'Thứ 5',
-          date: '2021/01/07'
-        },
-        {
-          name: 'Thứ 6',
-          date: '2021/01/08'
-        },
-        {
-          name: 'Thứ 7',
-          date: '2021/01/09'
-        },
-        {
-          name: 'Chủ nhật',
-          date: '2021/01/10'
-        }
-      ],
-      listTime: [
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ],
-        [
-          {
-            timeStart: '14:10',
-            timeEnd: '15:50',
-            room: 'rạp 1'
-          },
-          {
-            timeStart: '17:05',
-            timeEnd: '18:45',
-            room: 'rạp 2'
-          },
-          {
-            timeStart: '19:45',
-            timeEnd: '21:25',
-            room: 'rạp 3'
-          }
-        ]
-      ]
-    }
-  ]
-
+  console.log(props)
   return (
     <Tabs className="detail-content">
       <TabList className="detail-tab-list">
@@ -396,11 +80,11 @@ export default function DetailTabs(props) {
       <TabPanel className="detail-tab-threater">
         <Tabs className="threater">
           <TabList className="threater-list">
-            { filmSchedule.map(item => {
+            { props.filmSchedule.map(item => {
               return (
-                <Tab key={`threater${item.id}`} className="threater-list__item">
+                <Tab key={item._id} className="threater-list__item">
                   <div className="threater-detail__image">
-                    <img src={`${item.image}`} alt=""/>
+                    <img src={`${item.url_image}`} alt=""/>
                   </div>
                   <div className="threater-detail__content">
                     <div className="threater-detail__name">{item.name}</div>
@@ -411,42 +95,46 @@ export default function DetailTabs(props) {
             })}
           
           </TabList>
-          { filmSchedule.map(item => {
+          {
+            props.filmSchedule.map(item => {
               return (
-                <TabPanel key={`id${item.id}`} className="threater-content">
-                  <TabsDate listDate={item.listDate} listTime={item.listTime} threater={item.name} nameMovie={props.name}/>
+                <TabPanel key={item._id} className="threater-content">
+                  <TabsDate listDate={item.listDate} listTime={item.listTime} threater={item.name} nameMovie={props.filmDetail.name}/>
                 </TabPanel>
               )
-            })}
+            })
+          }
         </Tabs>
       </TabPanel>
       <TabPanel className="detail-tab-info">
         <div className="detail-info__info">
           <table>
-            <tr>
-              <th>Ngày công chiếu</th>
-              <td>18.12.2020</td>
-            </tr>
-            <tr>
-              <th>Đạo diễn</th>
-              <td>Patty Jenkins</td>
-            </tr>
-            <tr>
-              <th>Diễn viên</th>
-              <td>Chris Pine, Gal Gadot</td>
-            </tr>
-            <tr>
-              <th>Thể Loại</th>
-              <td>hành động, phiêu lưu, giả tưởng</td>
-            </tr>
-            <tr>
-              <th>Định dạng</th>
-              <td>2D/Digital</td>
-            </tr>
-            <tr>
-              <th>Quốc Gia SX</th>
-              <td>Mỹ</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th>Ngày công chiếu</th>
+                <td>18.12.2020</td>
+              </tr>
+              <tr>
+                <th>Đạo diễn</th>
+                <td>Patty Jenkins</td>
+              </tr>
+              <tr>
+                <th>Diễn viên</th>
+                <td>Chris Pine, Gal Gadot</td>
+              </tr>
+              <tr>
+                <th>Thể Loại</th>
+                <td>hành động, phiêu lưu, giả tưởng</td>
+              </tr>
+              <tr>
+                <th>Định dạng</th>
+                <td>2D/Digital</td>
+              </tr>
+              <tr>
+                <th>Quốc Gia SX</th>
+                <td>Mỹ</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div className="detail-info__content">

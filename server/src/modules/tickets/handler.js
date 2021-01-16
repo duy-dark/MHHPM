@@ -60,9 +60,10 @@ const postCreate = async (params) => {
       count: params.count || undefined,
       booking_time: params.booking_time || undefined,
       cost: params.cost || undefined,
-      customer_id: params.customer_id || undefined,
-      film_schedule_id: params.film_schedule_id || undefined,
-      voucher_id: params.voucher_id || undefined,
+      customer_id: require('mongodb').ObjectId(params.customer_id) || undefined,
+      film_schedule_id:
+        require('mongodb').ObjectId(params.film_schedule_id) || undefined,
+      voucher_id: require('mongodb').ObjectId(params.voucher_id) || undefined,
       seat_ids: params.seat_ids || undefined,
       email: params.email || undefined,
       phone_number: params.phone_number || undefined,
@@ -73,12 +74,14 @@ const postCreate = async (params) => {
     };
     console.log('lambda:', lambda);
 
+    let data = await Model.createByLambda(lambda);
+
     let mainOptions = {
       // thiết lập đối tượng, nội dung gửi mail
       from: 'example@example.com',
       to: params.email,
       subject: 'Đặt vé thành công',
-      html: contentMail(user.insertId) //Nội dung html mình đã tạo trên kia :))
+      html: contentMail(data[0]) //Nội dung html mình đã tạo trên kia :))
     };
     await transporter.sendMail(mainOptions, (err, info) => {
       if (err) {
@@ -89,7 +92,6 @@ const postCreate = async (params) => {
       }
     });
 
-    let data = await Model.createByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -104,9 +106,11 @@ const putUpdate = async (id, params) => {
         count: params.count || undefined,
         booking_time: params.booking_time || undefined,
         cost: params.cost || undefined,
-        customer_id: params.customer_id || undefined,
-        film_schedule_id: params.film_schedule_id || undefined,
-        voucher_id: params.voucher_id || undefined,
+        customer_id:
+          require('mongodb').ObjectId(params.customer_id) || undefined,
+        film_schedule_id:
+          require('mongodb').ObjectId(params.film_schedule_id) || undefined,
+        voucher_id: require('mongodb').ObjectId(params.voucher_id) || undefined,
         seat_ids: params.seat_ids || undefined,
         email: params.email || undefined,
         phone_number: params.phone_number || undefined,

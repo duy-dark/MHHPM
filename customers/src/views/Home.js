@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import "../styles/home.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo, updateHeaderFooter } from "../redux/users/actions";
+import { getListFilm } from "../redux/films/actions";
 import { useHistory } from "react-router-dom";
 import SliderMovies from "../components/SliderMovies";
 import CardFilm from "../components/CardFilm";
 import Select, { components } from "react-select";
 import ModalTrailer from "../components/ModalTrailer";
+import * as moment from 'moment';
 
 export default function Home(props) {
   let history = useHistory();
@@ -16,63 +18,55 @@ export default function Home(props) {
   const [selectDate, setSelectDate] = useState();
   const [selectTime, setSelectTime] = useState();
   const dispatch = useDispatch();
-  const optionsFilm = [
-    { value: 1, label: "Nữ Thần Chiến Binh 1984 - Wonder Woman 1984 (C13)" },
-    {
-      value: 2,
-      label:
-        "Thanh Gươm Diệt Quỷ: Chuyến Tàu Vô Tận - Demon Slayer The Movie: Mugen Train (P)",
-    },
-    { value: 3, label: "Chị Mười Ba: 3 Ngày Sinh Tử (C18)" },
-    {
-      value: 4,
-      label: `Doraemon: Nobita và Những Bạn Khủng Long Mới - Doraemon the Movie: Nobita's New Dinosaurs (P)`,
-    },
-  ];
-  const optionsThreater = selectFilm
-    ? [
-        {
-          value: 1,
-          label: "BHD Star Bitexco",
-          address: "L5-Vincom 3/2, 3C Đường 3/2, Q.10",
-        },
-        {
-          value: 2,
-          label: "BHD Star Vincom 3/2",
-          address: "Tầng 5, TTTM Vincom 3/2, 3C Đường 3/2, Quận 10, TPHCM",
-        },
-        {
-          value: 3,
-          label: "BHD Star Vincom Lê Văn Việt",
-          address:
-            "Tầng 4, toà nhà Vincom Plaza Lê Văn Việt, số 50 Lê Văn Việt, Quận 9, TP.HCM",
-        },
-        {
-          value: 4,
-          label: `BHD Star Vincom Quang Trung`,
-          address:
-            "Tầng B1&B2, TTTM Vincom, số 190 Quang Trung, Gò Vấp, Tp.HCM",
-        },
-      ]
-    : [{ label: "vui lòng chọn phim", isDisabled: true }];
-  const optionsDate = selectFilm
-    ? [
-        { value: 1, label: "Thứ 2", date: "2020/01/01" },
-        { value: 2, label: "Thứ 3", date: "2020/01/02" },
-        { value: 3, label: "Thứ 4", date: "2020/01/03" },
-        { value: 4, label: "Thứ 5", date: "2020/01/04" },
-        { value: 5, label: "Thứ 6", date: "2020/01/05" },
-        { value: 6, label: "Thứ 7", date: "2020/01/06" },
-        { value: 7, label: "Chủ nhật", date: "2020/01/07" },
-      ]
-    : [{ label: "vui lòng chọn rạp", isDisabled: true }];
-  const optionsTime =
-    selectDate && selectThreater
-      ? [
-          { value: 1, label: "17:55~19:25", room: "rap-1" },
-          { value: 2, label: "20:55~22:25", room: "rap-2" },
-        ]
-      : [{ label: "vui lòng chọn ngày", isDisabled: true }];
+
+
+  const list = useSelector((state) => state.films.films);
+  const listSlider = useSelector((state) => {
+    let arr = state.films.films.slice(0, 4);
+    return arr;
+  });
+
+  const arrOptionFilm = useSelector(state => {
+    let films = state.films.films
+    return films.map(film => ({ ...film, label: film.name, value: film._id}));
+  })
+
+  const arrOptionTheater = useSelector(state => {
+    let theaters = state.films.theaters
+    return theaters.map(theater => ({ ...theater, label: theater.name, value: theater._id }));
+  })
+
+  const arrOptionDate = useSelector(state => {
+    let film = state.films.films[0]
+    if (film && film.listday) {
+      return film.listday.map((day, index) => ({ ...day, label: day.name, value: index }));
+    }
+  })
+
+  const arrOptionTime = useSelector(state => {
+    if (selectFilm) {
+      let films = state.films.films
+      let film = films.filter(film => film._id === selectFilm._id)[0]
+      if (selectDate) {
+        let dates = film.film_schedules.filter(date => moment(date.time_start).format('DD/MM/YYYY') === selectDate.date)
+        return dates.map(date => ({ ...date, label: moment(date.start_date).format('hh:mm') + '~' + moment(date.end_date).format('hh:mm')}))
+      }
+    }
+  })
+
+  useEffect(() => {
+    dispatch(getListFilm())
+    dispatch(updateHeaderFooter({
+      header: true,
+      footer: true
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
+  const optionsFilm = arrOptionFilm;
+  const optionsThreater = selectFilm ? arrOptionTheater : [{ label: "vui lòng chọn phim", isDisabled: true }];
+  const optionsDate = selectFilm ? arrOptionDate : [{ label: "vui lòng chọn rạp", isDisabled: true }];
+  const optionsTime = selectDate && selectThreater ? arrOptionTime : [{ label: "vui lòng chọn ngày", isDisabled: true }];
   const disabledBtn = selectFilm && selectThreater && selectDate && selectTime;
   const OptionComponent = (props) => {
     return (
@@ -87,23 +81,19 @@ export default function Home(props) {
     );
   };
 
-  const list = useSelector((state) => state.films.films);
-  const listSlider = useSelector((state) => {
-    let arr = state.films.films.slice(0, 4);
-    return arr;
-  });
   const BookingTicketFast = () => {
     history.push({
       pathname: "/booking/" + selectFilm.label,
       state: {
-        threater: selectThreater.label,
+        threater: selectThreater.name,
         address: selectThreater.address,
         room: selectTime.room,
-        name: selectFilm.label,
-        timeStart: selectTime.label,
+        name: selectFilm.name,
+        timeStart: moment(selectTime.start_date).format('hh:mm'),
         date: selectDate.date,
-        day: selectDate.label,
-        typeThreater: selectThreater.label,
+        day: selectDate.name,
+        typeThreater: selectThreater.name,
+        scheduleId: selectDate._id
       },
     });
   };
@@ -115,7 +105,6 @@ export default function Home(props) {
         footer: true,
       })
     );
-    console.log(listSlider);
     const token = localStorage.getItem("token");
     const userID = localStorage.getItem("userID");
     if (token && userID) {

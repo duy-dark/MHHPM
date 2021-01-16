@@ -1,7 +1,9 @@
 import FilmTypes from "./types";
 
-export function getListFilmShowing() {
-  return {};
+export function getListFilm() {
+  return {
+    type: FilmTypes.LIST_FILM
+  };
 }
 
 export function postBookingInfo(bookingInfo, history) {

@@ -7,7 +7,7 @@ import { updateHeaderFooter } from "../redux/users/actions";
 import { getFilmDetails } from "../redux/films/actions";
 import ImagePlay from "../assets/slider/play-video.png";
 import ModalTrailer from '../components/ModalTrailer';
-import * as moment from 'moment'
+import * as moment from 'moment';
 
 export default function FilmDetail(props) {
   // let history = useHistory();

@@ -4,10 +4,9 @@ import httpFilms from "../../api/films";
 
 function* fetchPostBookingInfo(action) {
   try {
-    console.log(action)
     const res = yield call(httpFilms.postBookingInfo, action.payload);
     if (res.status === "ok") {
-      yield put({ type: FilmsType.POST_BOOKING_INFO, payload: res.data });
+      yield put({ type: FilmsType.POST_BOOKING_INFO_SUCCESS, payload: res.data });
       action.history.push({
         pathname: "/completed",
         state: {

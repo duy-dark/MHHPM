@@ -1,15 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
+const {omitBy, isNil} = require('lodash');
 
 router.get('/', (req, res, next) => {
+  let conditions = {
+    _id: req.query._id,
+    name: req.query.name
+  };
+  conditions = omitBy(conditions, isNil);
   handler
-    .getAll()
+    .getList(conditions)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id/detail', (req, res, next) => {
   let id = req.params.id;
   handler
     .findById(id)

@@ -1,11 +1,10 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.mailtrap.io',
-  port: 2525,
+  service: 'gmail',
   auth: {
-    user: '5b9a4665af6a4a',
-    pass: '6993d4bb6fde16'
+    user: 'doantotnghiepthang9@gmail.com',
+    pass: 'doantotnghiep'
   }
 });
 let contentMail = (ticket) => {
@@ -20,10 +19,10 @@ let contentMail = (ticket) => {
           <span style="color: black, width: 150px">Tên khách hàng:${ticket.customers} </span><br/>
           <span style="color: black, width: 150px">Số điện thoại:${ticket.phone_number} </span><br/>
           <span style="color: black, width: 150px">Loại thanh toán:${ticket.payment} </span><br/>
-          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.time_start} </span><br/>
-          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.time_end} </span><br/>
-          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.theater} </span><br/>
-          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.room} </span><br/>
+          <span style="color: black, width: 150px">Thời gian bắt đầu:${ticket.time_start} </span><br/>
+          <span style="color: black, width: 150px">Thời gian hết phim:${ticket.time_end} </span><br/>
+          <span style="color: black, width: 150px">Tên rạp:${ticket.theater} </span><br/>
+          <span style="color: black, width: 150px">Tên phòng:${ticket.room} </span><br/>
       </div>
     </div> 
   `;

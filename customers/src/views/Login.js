@@ -26,7 +26,7 @@ export default function Login(props) {
   return (
     <div className="login">
       <div className="login-background">
-        <p className="login-title">LOGIN</p>
+        <p className="login-title">WEEKEND FILM</p>
         <div className="login-form">
           <div className="login-form__logo">
             <img src={logo} alt="" />

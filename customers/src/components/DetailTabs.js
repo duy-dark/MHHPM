@@ -112,34 +112,34 @@ export default function DetailTabs(props) {
             <tbody>
               <tr>
                 <th>Ngày công chiếu</th>
-                <td>18.12.2020</td>
+                <td>{ moment(props.filmDetail.start_date).format('DD/MM/YYYY')}</td>
               </tr>
               <tr>
                 <th>Đạo diễn</th>
-                <td>Patty Jenkins</td>
+                <td>{props.filmDetail.directors}</td>
               </tr>
               <tr>
                 <th>Diễn viên</th>
-                <td>Chris Pine, Gal Gadot</td>
+                <td>{props.filmDetail.actors}</td>
               </tr>
               <tr>
                 <th>Thể Loại</th>
-                <td>hành động, phiêu lưu, giả tưởng</td>
+                <td>{ props.filmDetail.categories.map(item => item.name) }</td>
               </tr>
               <tr>
                 <th>Định dạng</th>
-                <td>2D/Digital</td>
+                <td>{ props.filmDetail.digitals }</td>
               </tr>
               <tr>
                 <th>Quốc Gia SX</th>
-                <td>Mỹ</td>
+                <td>{ props.filmDetail.countries }</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="detail-info__content">
           <p className="detail-info__content__title">Nội dung</p>
-          <p>Lấy bối cảnh thời kỳ Chiến tranh Lạnh, Wonder Woman 1984 sẽ xoay quanh cuộc đối đầu giữa Nữ thần Chiến binh và Yêu nữ Báo đốm Cheetah.</p>
+          <p>{ props.filmDetail.content }</p>
         </div>
       </TabPanel>
       <TabPanel className="detail-tab-comment">

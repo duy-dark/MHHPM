@@ -15,10 +15,15 @@ let contentMail = (ticket) => {
           <h4 style="color: #0085ff">Đặt vé thành công</h4>
           <span style="color: black, width: 150px">Mã: ${ticket.id}</span><br/>
           <span style="color: black, width: 150px">Số ghế:${ticket.count} </span><br/>
-          <span style="color: black, width: 150px">Ghế:${ticket.seat_ids} </span><br/>
+          <span style="color: black, width: 150px">Ghế:${ticket.seats} </span><br/>
           <span style="color: black, width: 150px">Giá:${ticket.cost} </span><br/>
+          <span style="color: black, width: 150px">Tên khách hàng:${ticket.customers} </span><br/>
           <span style="color: black, width: 150px">Số điện thoại:${ticket.phone_number} </span><br/>
-          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.payment} </span><br/>
+          <span style="color: black, width: 150px">Loại thanh toán:${ticket.payment} </span><br/>
+          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.time_start} </span><br/>
+          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.time_end} </span><br/>
+          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.theater} </span><br/>
+          <span style="color: black, width: 150px">Hình thức thành toán:${ticket.room} </span><br/>
       </div>
     </div> 
   `;

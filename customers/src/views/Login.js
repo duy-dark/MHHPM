@@ -14,9 +14,11 @@ export default function Login(props) {
   const responseFacebook = (response) => {
     console.log("response", response);
     const user = {
+      facebook_id: response.id,
       name: response.name,
       email: response.email,
       avatar: response.picture.data.url,
+      account_type: "facebook",
     };
     dispatch(signIn(user, history));
   };
@@ -24,9 +26,11 @@ export default function Login(props) {
   const responseGoogle = (response) => {
     console.log(response);
     const user = {
-      name: response.name,
-      email: response.email,
-      avatar: response.picture.data.url,
+      google_id: response.googleId,
+      name: response.profileObj.name,
+      email: response.profileObj.email,
+      avatar: response.profileObj.imageUrl,
+      account_type: "facebook",
     };
     dispatch(signIn(user, history));
   };

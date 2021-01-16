@@ -27,7 +27,7 @@ export default function userReducer(state = initialState, action) {
       newState = Object.assign({}, state, { friends: payload.friends });
       break;
     case UsersTypes.USER_INFO_SUCCESS:
-      newState = Object.assign({}, state, { user: payload.data });
+      newState = Object.assign({}, state, { user: payload });
       break;
     case UsersTypes.UDS_FRIEND_SUCCESS:
       const { friends } = state;

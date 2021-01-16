@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
     address: req.query.address,
     url_image: req.query.url_image,
     comment: req.query.comment,
-    room_ids: req.query.room_ids
+    rooms: req.query.rooms
   };
   conditions = omitBy(conditions, isNil);
   handler

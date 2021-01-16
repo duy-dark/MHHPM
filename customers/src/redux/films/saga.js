@@ -20,10 +20,30 @@ function* fetchPostBookingInfo(action) {
     throw error;
   }
 }
+
+function* fetchFilmDetails(action) {
+  try {
+    const { payload } = action;
+    const res = yield call(httpFilms.getDetail, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
 
+function* getFilmDetails() {
+  yield takeEvery(FilmsType.FILM_DETAIL, fetchFilmDetails);
+}
+
 export default function* filmsSaga() {
-  yield all([postBookingInfo()]);
+  yield all([
+    postBookingInfo(),
+    getFilmDetails()
+  ]);
 }

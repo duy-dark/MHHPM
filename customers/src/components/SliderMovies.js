@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
@@ -26,59 +26,41 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default class SliderMovies extends Component {
-  constructor(props) {
-    super(props);
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-  }
-  play() {
-    this.slider.slickPlay();
-  }
-  pause() {
-    this.slider.slickPause();
-  }
-  render() {
-    const settings = {
-      customPaging: function(i) {
-        return (
-          <Link className="adot__link" to="/movies/details">
-            <img src={`/assets/slider/adot-${i + 1}.png`} alt=""/>
-          </Link>
-        );
-      },
-      dots: true,
-      dotsClass: "slick-dots slick-thumb",
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />,
-    };
-    return (
-      <div className="block-slider">
-        <Slider className="slider" ref={slider => (this.slider = slider)} {...settings}>
-          <div className="slider__list">
-            <img className="slider__image" src={"/assets/slider/slider1.png"}  alt=""/>
-            <img className="play" onClick={() => this.props.clickTrailer('5ff1460f63ccaf2a14e45104')} src={ImagePlay} alt=""/>
-          </div>
-          <div className="slider__list">
-            <img className="slider__image" src={"/assets/slider/slider2.png"}  alt=""/>
-            <img className="play" onClick={() => this.props.clickTrailer('')} src={ImagePlay} alt=""/>
-          </div>
-          <div className="slider__list">
-            <img className="slider__image" src={"/assets/slider/slider3.png"}  alt=""/>
-            <img className="play" onClick={() => this.props.clickTrailer('5ff13d58c377292934d208df')} src={ImagePlay} alt=""/>
-          </div>
-          <div className="slider__list">
-            <img className="slider__image" src={"/assets/slider/slider4.png"}  alt=""/>
-            <img className="play" onClick={() => this.props.clickTrailer('')} src={ImagePlay} alt=""/>
-          </div>
-        </Slider>
-      </div>
-    );
-  }
+export default function SliderMovies(props) {
+  const settings = {
+    customPaging: function(i) {
+      return (
+        <Link className="adot__link" to="/movies/details">
+          <img src={`${props.listSlider[i].url_avatar}`} alt=""/>
+        </Link>
+      );
+    },
+    dots: true,
+    dotsClass: "slick-dots slick-thumb",
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
+  return (
+    <div className="block-slider">
+      <Slider className="slider" {...settings}>
+        {
+          props.listSlider.map(item => {
+            return (
+              <div key={item._id} className="slider__list">
+                <img className="slider__image" src={`${item.url_background}`}  alt=""/>
+                <img className="play" onClick={() => this.props.clickTrailer(item._id)} src={ImagePlay} alt=""/>
+              </div>
+            )
+          })
+        }
+      </Slider>
+    </div>
+  );
 }

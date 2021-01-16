@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/home.scss';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateHeaderFooter } from "../redux/users/actions";
 import { useHistory } from 'react-router-dom';
 import SliderMovies from '../components/SliderMovies';
@@ -53,41 +53,11 @@ export default function Home(props) {
     )
   }
 
-  const list = [
-    {
-      name: "Nữ Thần Chiến Binh 1984 - Wonder Woman 1984",
-      date: "11.12.2020",
-      long: "100",
-      time: "100 phút - 0 IMDb - 2D/Digital",
-      image: "/assets/films/film1.png",
-      poster: "/assets/films/poster1.png"
-    },
-    {
-      name: "Thanh Gươm Diệt Quỷ: Chuyến Tàu Vô Tận - Demon Slayer The Movie: Mugen Train",
-      date: "11.12.2020",
-      long: "117",
-      time: "117 phút - 0 IMDb - 2D/Digital",
-      image: "/assets/films/film2.png",
-      poster: "/assets/films/poster2.png"
-    },
-    {
-      name: "Chị Mười Ba: 3 Ngày Sinh Tử",
-      date: "25.12.2020",
-      long: "100",
-      time: "100 phút - 0 IMDb - 2D/Digital",
-      image: "/assets/films/film3.png",
-      poster: "/assets/films/poster3.png"
-    },
-    {
-      name: "Doraemon: Nobita và Những Bạn Khủng Long Mới - Doraemon the Movie: Nobita's New Dinosaurs",
-      date: "18.12.2020",
-      long: "110",
-      time: "110 phút - 0 IMDb - 2D/Digital",
-      image: "/assets/films/film4.png",
-      poster: "/assets/films/poster4.png"
-    }
-  ]
-
+  const list = useSelector(state => state.films.films)
+  const listSlider = useSelector(state => {
+    let arr = state.films.films.slice(0, 4)
+    return arr
+  })
   const BookingTicketFast = () => {
     history.push({
       pathname: '/booking/' + selectFilm.label,
@@ -108,14 +78,19 @@ export default function Home(props) {
       header: true,
       footer: true
     }))
+    console.log(listSlider)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [modalShow, setModalShow] = React.useState(false);
-
+  const [modalId, setModalId] = React.useState('');
+  const showTrailerSlider = (id) => {
+    setModalId(id)
+    setModalShow(true)
+  }
   return (
     <>
-      <SliderMovies />
+      <SliderMovies listSlider={listSlider} clickTrailer={(id) => showTrailerSlider(id)}/>
       <div className="container">
         <div className="filter-film">
           <Select
@@ -150,12 +125,12 @@ export default function Home(props) {
           <button className={"btn btn-booking" + (disabledBtn ? '' : ' btn-disabled')} onClick={BookingTicketFast}>MUA VÉ NGAY</button>
         </div>
         <div className="list-film">
-          { list.map(movie =>  <CardFilm {...movie} />) }
+          { list.map(movie =>  <CardFilm key={movie._id} {...movie} />) }
         </div>
         <ModalTrailer
           show={modalShow}
           onHide={() => setModalShow(false)}
-          id="5ff13d58c377292934d208df"
+          id={modalId}
         />
       </div>
     </>

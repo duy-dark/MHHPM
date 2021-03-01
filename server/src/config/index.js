@@ -22,7 +22,7 @@ K/ZWhhtxEomhGkIGjQIDAQAB
 -----END PUBLIC KEY-----`;
 
 module.exports = {
-  port: process.env.PORT || 1000,
+  port: process.env.PORT || 2000,
   mongoURL:
     process.env.MONGO_URL ||
     'mongodb+srv://root:root@cluster0.10g9w.mongodb.net/moviebookingdb?retryWrites=true&w=majority',
